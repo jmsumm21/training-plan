@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Trail Plan">
+<meta name="theme-color" content="#F7F3EE">
+<title>Trail Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #F7F3EE;
+  --surface: #FFFFFF;
+  --border:  #E8E1D8;
+  --ink:     #1C1A17;
+  --mid:     #7A7368;
+  --faint:   #B0A898;
+  --moss:    #4A6B3A;
+  --moss-lt: #EBF0E7;
+  --amber:   #8A6830;
+  --amber-lt:#F2EBE0;
+  --slate:   #3A5568;
+  --slate-lt:#E6EDF2;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
+
+html { height: 100%; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  min-height: 100%;
+  min-height: -webkit-fill-available;
+  display: flex;
+  flex-direction: column;
+  padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 0) env(safe-area-inset-bottom, 0) env(safe-area-inset-left, 0);
+  overflow-x: hidden;
+}
+
+/* ── PAGES ── */
+.page {
+  display: none;
+  flex-direction: column;
+  flex: 1;
+  min-height: 100svh;
+}
+.page.active { display: flex; }
+
+/* ── HOME ── */
+#home {
+  padding: 0 24px 32px;
+  justify-content: space-between;
+}
+
+/* Header */
+.home-header {
+  padding-top: max(56px, env(safe-area-inset-top, 56px));
+  padding-bottom: 8px;
+}
+
+.home-eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-bottom: 8px;
+  animation: fadeUp 0.5s 0.1s ease both;
+}
+
+.home-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(36px, 9vw, 52px);
+  line-height: 1.0;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  animation: fadeUp 0.5s 0.15s ease both;
+}
+
+.home-title em {
+  font-style: italic;
+  color: var(--moss);
+}
+
+/* Race countdown chip */
+.race-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--moss-lt);
+  border: 1px solid rgba(74,107,58,0.18);
+  border-radius: 20px;
+  padding: 6px 14px 6px 10px;
+  margin-top: 20px;
+  animation: fadeUp 0.5s 0.25s ease both;
+}
+
+.race-chip-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--moss);
+  animation: blink 2s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%,100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.race-chip-text {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--moss);
+  letter-spacing: 0.02em;
+}
+
+/* Nav buttons */
+.nav-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 48px;
+  flex: 1;
+  justify-content: center;
+}
+
+.nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 24px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  animation: fadeUp 0.5s ease both;
+}
+
+.nav-btn:nth-child(1) { animation-delay: 0.3s; }
+.nav-btn:nth-child(2) { animation-delay: 0.38s; }
+.nav-btn:nth-child(3) { animation-delay: 0.46s; }
+
+.nav-btn:active {
+  transform: scale(0.98);
+}
+
+.nav-btn-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nav-btn-icon {
+  font-size: 22px;
+  margin-bottom: 6px;
+  display: block;
+  line-height: 1;
+}
+
+.nav-btn-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+.nav-btn-sub {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  margin-top: 2px;
+  opacity: 0.6;
+}
+
+.nav-btn-arrow {
+  font-size: 20px;
+  opacity: 0.3;
+  flex-shrink: 0;
+  font-weight: 300;
+  line-height: 1;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.nav-btn:hover .nav-btn-arrow {
+  transform: translateX(3px);
+  opacity: 0.6;
+}
+
+/* Button variants */
+.btn-plan {
+  background: var(--moss-lt);
+  border: 1px solid rgba(74,107,58,0.15);
+  box-shadow: 0 2px 12px rgba(74,107,58,0.08);
+}
+.btn-plan .nav-btn-title { color: var(--moss); }
+.btn-plan .nav-btn-sub   { color: var(--moss); }
+.btn-plan .nav-btn-arrow { color: var(--moss); }
+
+.btn-strength {
+  background: var(--amber-lt);
+  border: 1px solid rgba(138,104,48,0.15);
+  box-shadow: 0 2px 12px rgba(138,104,48,0.08);
+}
+.btn-strength .nav-btn-title { color: var(--amber); }
+.btn-strength .nav-btn-sub   { color: var(--amber); }
+.btn-strength .nav-btn-arrow { color: var(--amber); }
+
+.btn-nutrition {
+  background: var(--slate-lt);
+  border: 1px solid rgba(58,85,104,0.15);
+  box-shadow: 0 2px 12px rgba(58,85,104,0.08);
+}
+.btn-nutrition .nav-btn-title { color: var(--slate); }
+.btn-nutrition .nav-btn-sub   { color: var(--slate); }
+.btn-nutrition .nav-btn-arrow { color: var(--slate); }
+
+/* Footer */
+.home-footer {
+  text-align: center;
+  padding-top: 24px;
+  animation: fadeUp 0.5s 0.55s ease both;
+}
+
+.home-footer-text {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+/* ── INNER PAGES ── */
+.inner-page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.inner-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: max(56px, env(safe-area-inset-top, 56px)) 24px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.back-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  font-size: 18px;
+  color: var(--mid);
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.back-btn:active { background: var(--border); }
+
+.inner-header-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.inner-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 32px;
+  gap: 12px;
+}
+
+.coming-soon-icon {
+  font-size: 40px;
+  margin-bottom: 8px;
+}
+
+.coming-soon-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 24px;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  text-align: center;
+}
+
+.coming-soon-body {
+  font-size: 14px;
+  color: var(--mid);
+  text-align: center;
+  line-height: 1.7;
+  max-width: 240px;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ── PAGE TRANSITIONS ── */
+.page-enter {
+  animation: slideIn 0.32s cubic-bezier(0.22,0.8,0.32,1) both;
+}
+.page-exit {
+  animation: slideOut 0.28s ease both;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(32px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes slideOut {
+  from { opacity: 1; transform: none; }
+  to   { opacity: 0; transform: translateX(-20px); }
+}
+</style>
+</head>
+<body>
+
+<!-- ── HOME PAGE ── -->
+<div class="page active" id="home">
+
+  <div class="home-header">
+    <div class="home-eyebrow">Cotswold Half Way · Sep 2026</div>
+    <div class="home-title">Trail<br><em>Training</em></div>
+    <div class="race-chip">
+      <div class="race-chip-dot"></div>
+      <div class="race-chip-text" id="countdown">Loading…</div>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="nav-btn btn-plan" onclick="navigate('plan')">
+      <div class="nav-btn-left">
+        <span class="nav-btn-icon">🏔</span>
+        <div class="nav-btn-title">Training Plan</div>
+        <div class="nav-btn-sub">16-week build · Recovery → Race</div>
+      </div>
+      <div class="nav-btn-arrow">›</div>
+    </button>
+
+    <button class="nav-btn btn-strength" onclick="navigate('strength')">
+      <div class="nav-btn-left">
+        <span class="nav-btn-icon">💪</span>
+        <div class="nav-btn-title">Strength &amp; Conditioning</div>
+        <div class="nav-btn-sub">Home sessions · Bodyweight</div>
+      </div>
+      <div class="nav-btn-arrow">›</div>
+    </button>
+
+    <button class="nav-btn btn-nutrition" onclick="navigate('nutrition')">
+      <div class="nav-btn-left">
+        <span class="nav-btn-icon">🥗</span>
+        <div class="nav-btn-title">Nutrition</div>
+        <div class="nav-btn-sub">Fuelling · Recovery · Race day</div>
+      </div>
+      <div class="nav-btn-arrow">›</div>
+    </button>
+  </div>
+
+  <div class="home-footer">
+    <div class="home-footer-text">Chipping Campden → Painswick · 75km</div>
+  </div>
+
+</div>
+
+<!-- ── TRAINING PLAN PAGE ── -->
+<div class="page" id="plan">
+  <div class="inner-page">
+    <div class="inner-header">
+      <div class="back-btn" onclick="goHome()">‹</div>
+      <div class="inner-header-title">Training Plan</div>
+    </div>
+    <div class="inner-body">
+      <div class="coming-soon-icon">🏔</div>
+      <div class="coming-soon-title">Coming Soon</div>
+      <div class="coming-soon-body">Your 16-week build from recovery to race day will live here.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── STRENGTH PAGE ── -->
+<div class="page" id="strength">
+  <div class="inner-page">
+    <div class="inner-header">
+      <div class="back-btn" onclick="goHome()">‹</div>
+      <div class="inner-header-title">Strength &amp; Conditioning</div>
+    </div>
+    <div class="inner-body">
+      <div class="coming-soon-icon">💪</div>
+      <div class="coming-soon-title">Coming Soon</div>
+      <div class="coming-soon-body">Your home bodyweight sessions and progression will live here.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── NUTRITION PAGE ── -->
+<div class="page" id="nutrition">
+  <div class="inner-page">
+    <div class="inner-header">
+      <div class="back-btn" onclick="goHome()">‹</div>
+      <div class="inner-header-title">Nutrition</div>
+    </div>
+    <div class="inner-body">
+      <div class="coming-soon-icon">🥗</div>
+      <div class="coming-soon-title">Coming Soon</div>
+      <div class="coming-soon-body">Fuelling guides, race day nutrition, and recovery eating will live here.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── COUNTDOWN ──
+function updateCountdown() {
+  const race = new Date('2026-09-19T06:00:00');
+  const now  = new Date();
+  const diff = race - now;
+  if (diff <= 0) {
+    document.getElementById('countdown').textContent = 'Race day!';
+    return;
+  }
+  const days  = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const weeks = Math.floor(days / 7);
+  const rem   = days % 7;
+  let txt = '';
+  if (weeks > 0) txt += `${weeks}w `;
+  if (rem > 0 || weeks === 0) txt += `${rem}d`;
+  document.getElementById('countdown').textContent = `${txt.trim()} to race day`;
+}
+updateCountdown();
+
+// ── NAVIGATION ──
+let current = 'home';
+
+function navigate(id) {
+  const from = document.getElementById(current);
+  const to   = document.getElementById(id);
+  from.classList.add('page-exit');
+  setTimeout(() => {
+    from.classList.remove('active', 'page-exit');
+    to.classList.add('active', 'page-enter');
+    setTimeout(() => to.classList.remove('page-enter'), 320);
+    current = id;
+  }, 220);
+}
+
+function goHome() {
+  navigate('home');
+}
+</script>
+</body>
+</html>
