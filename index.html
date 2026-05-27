@@ -2,555 +2,1484 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="JS Training">
-<meta name="theme-color" content="#F7F3EE">
-<title>JS · Training Plan</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Training Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="data.js"></script>
 <style>
+/* ═══════════════════════════════════════════════════════
+   DESIGN TOKENS
+   Warm neutral palette: parchment base, charcoal text,
+   terracotta accent, sage secondary
+═══════════════════════════════════════════════════════ */
 :root {
-  --bg:      #F7F3EE;
-  --surface: #FFFFFF;
-  --border:  #E8E1D8;
-  --ink:     #1C1A17;
-  --mid:     #7A7368;
-  --faint:   #B0A898;
-  --moss:    #4A6B3A;
-  --moss-lt: #EBF0E7;
-  --amber:   #8A6830;
-  --amber-lt:#F2EBE0;
-  --slate:   #3A5568;
-  --slate-lt:#E6EDF2;
+  --bg:         #f5f0e8;
+  --bg2:        #ede8de;
+  --bg3:        #e4ddd0;
+  --surface:    #ffffff;
+  --border:     rgba(90,75,55,0.12);
+  --border2:    rgba(90,75,55,0.22);
+  --text:       #2a2118;
+  --text2:      #6b5c48;
+  --text3:      #a8957e;
+  --accent:     #c4541a;
+  --accent2:    #e06030;
+  --accent-dim: rgba(196,84,26,0.10);
+  --sage:       #5a7a5e;
+  --sage-dim:   rgba(90,122,94,0.10);
+  --slate:      #4a6070;
+  --slate-dim:  rgba(74,96,112,0.10);
+  --amber:      #b8860b;
+  --amber-dim:  rgba(184,134,11,0.10);
+  --font-display: 'Playfair Display', serif;
+  --font-body:    'Source Serif 4', serif;
+  --font-mono:    'DM Mono', monospace;
+  --radius:     5px;
+  --radius-lg:  10px;
+  --shadow:     0 1px 3px rgba(42,33,24,0.08), 0 4px 16px rgba(42,33,24,0.05);
 }
 
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-html { height:100%; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
 
 body {
   background: var(--bg);
-  color: var(--ink);
-  font-family: 'DM Sans', sans-serif;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+/* ── HEADER ── */
+header {
+  background: var(--text);
+  color: var(--bg);
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: 58px;
+  border-bottom: 2px solid var(--accent);
+}
+
+.logo {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 20px;
+  letter-spacing: 0.01em;
+  color: var(--bg);
+  margin-right: 36px;
+  white-space: nowrap;
+}
+
+.logo span { color: var(--accent2); }
+
+nav { display: flex; gap: 0; flex: 1; }
+
+nav a {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.55);
+  text-decoration: none;
+  cursor: pointer;
+  padding: 0 16px;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+
+nav a:hover { color: var(--bg); }
+nav a.active { color: var(--bg); border-bottom-color: var(--accent2); }
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-left: auto;
+}
+
+.race-countdown {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: rgba(245,240,232,0.55);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.race-countdown strong {
+  color: var(--accent2);
+  font-size: 14px;
+}
+
+/* ── PAGES ── */
+.page { display: none; }
+.page.active { display: block; }
+
+/* ── LAYOUT ── */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 36px 28px;
+}
+
+.page-title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 38px;
+  line-height: 1.1;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.page-subtitle {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 32px;
+}
+
+/* ── CARDS ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 22px 26px;
+  box-shadow: var(--shadow);
+}
+
+.card + .card { margin-top: 14px; }
+
+.card-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+
+/* ── GRID LAYOUTS ── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+.grid-auto { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+
+/* ── STAT TILES ── */
+.stat-tile {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
+  box-shadow: var(--shadow);
+}
+
+.stat-tile-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 8px;
+}
+
+.stat-tile-value {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 1;
+  color: var(--text);
+}
+
+.stat-tile-value span {
+  font-family: var(--font-body);
+  font-size: 13px;
   font-weight: 300;
-  min-height: 100%;
-  min-height: -webkit-fill-available;
+  color: var(--text2);
+  margin-left: 3px;
+}
+
+.stat-tile-sub {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text3);
+  margin-top: 5px;
+}
+
+/* ── PILLS / BADGES ── */
+.pill {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.pill-accent   { background: var(--accent-dim);  color: var(--accent); }
+.pill-sage     { background: var(--sage-dim);     color: var(--sage); }
+.pill-slate    { background: var(--slate-dim);    color: var(--slate); }
+.pill-amber    { background: var(--amber-dim);    color: var(--amber); }
+.pill-neutral  { background: var(--bg2);          color: var(--text2); }
+.pill-recovery { background: var(--bg3);          color: var(--text3); }
+
+/* ── SECTION DIVIDER ── */
+.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 24px 0;
+}
+
+/* ── ACCORDION / EXPANDABLE ── */
+.accordion-item {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  margin-bottom: 10px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.accordion-header {
+  padding: 16px 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  user-select: none;
+  transition: background 0.15s;
+}
+
+.accordion-header:hover { background: var(--bg2); }
+
+.accordion-toggle {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--text3);
+  margin-left: auto;
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+
+.accordion-item.open .accordion-toggle { transform: rotate(180deg); }
+
+.accordion-body {
+  display: none;
+  padding: 0 20px 18px;
+  border-top: 1px solid var(--border);
+}
+
+.accordion-item.open .accordion-body { display: block; }
+
+/* ── SESSION BLOCK ── */
+.session-day {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-top: 16px;
+  margin-bottom: 6px;
+}
+
+.session-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.session-row:last-child { border-bottom: none; }
+
+.session-check {
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid var(--border2);
+  border-radius: 4px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: var(--accent);
+  transition: background 0.15s, border-color 0.15s;
+  background: transparent;
+}
+
+.session-check.checked {
+  background: var(--accent-dim);
+  border-color: var(--accent);
+}
+
+.session-content { flex: 1; }
+
+.session-title {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+
+.session-detail {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.5;
+}
+
+.session-detail ul {
+  margin: 6px 0 0 16px;
+  color: var(--text2);
+}
+
+.session-detail ul li { margin-bottom: 3px; }
+
+.session-purpose {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  color: var(--text3);
+  margin-top: 5px;
+  font-style: italic;
+}
+
+/* ── WEEK CARD ── */
+.week-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  flex-wrap: wrap;
+}
+
+.week-number {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--text);
+  line-height: 1;
+  min-width: 80px;
+}
+
+.week-number span {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--text3);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.week-meta {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.week-volume {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text2);
+}
+
+.week-progress {
+  height: 4px;
+  background: var(--bg3);
+  border-radius: 2px;
+  margin-top: 10px;
+  overflow: hidden;
+}
+
+.week-progress-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+/* ── TODAY PAGE ── */
+.today-hero {
+  background: var(--text);
+  color: var(--bg);
+  border-radius: var(--radius-lg);
+  padding: 28px 32px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.today-hero::after {
+  content: '';
+  position: absolute;
+  right: -20px; top: -20px;
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  background: rgba(196,84,26,0.12);
+}
+
+.today-date {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.5);
+  margin-bottom: 8px;
+}
+
+.today-heading {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 32px;
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+
+.today-heading em { color: var(--accent2); font-style: normal; }
+
+.today-phase {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: rgba(245,240,232,0.5);
+}
+
+.today-sessions {
   display: flex;
   flex-direction: column;
-  padding: env(safe-area-inset-top,0) env(safe-area-inset-right,0) env(safe-area-inset-bottom,0) env(safe-area-inset-left,0);
-  overflow-x: hidden;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
-.page { display:none; flex-direction:column; flex:1; min-height:100svh; }
-.page.active { display:flex; }
-
-/* ── HOME ── */
-#home { padding:0 24px 32px; }
-
-.home-header {
-  padding-top: max(52px, env(safe-area-inset-top, 52px));
-  margin-bottom: 24px;
+.today-session-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  box-shadow: var(--shadow);
+  border-left: 3px solid var(--border2);
 }
 
-.home-eyebrow {
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.18em;
+.today-session-card.type-run     { border-left-color: var(--accent); }
+.today-session-card.type-long    { border-left-color: var(--sage); }
+.today-session-card.type-quality { border-left-color: var(--amber); }
+.today-session-card.type-strength{ border-left-color: var(--slate); }
+.today-session-card.type-rest    { border-left-color: var(--border2); }
+
+.today-session-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.today-session-title {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text);
+  margin-bottom: 3px;
+}
+
+.today-session-desc {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.5;
+}
+
+.today-session-check {
+  margin-left: auto;
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border: 1.5px solid var(--border2);
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: var(--accent);
+  transition: all 0.15s;
+  background: transparent;
+}
+
+.today-session-check.checked {
+  background: var(--accent-dim);
+  border-color: var(--accent);
+}
+
+/* ── WEEK OVERVIEW STRIP ── */
+.week-strip {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.strip-day {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 8px 6px;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+.strip-day.today-day {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+}
+
+.strip-day.has-session { background: var(--bg2); }
+
+.strip-day-name {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--faint);
-  margin-bottom: 6px;
-  animation: fadeUp 0.5s 0.08s ease both;
+  color: var(--text3);
+  margin-bottom: 4px;
 }
 
-.home-title {
-  font-family: 'DM Serif Display', serif;
-  font-size: clamp(30px, 7.5vw, 44px);
-  line-height: 1.05;
-  color: var(--ink);
-  letter-spacing: -0.02em;
-  animation: fadeUp 0.5s 0.14s ease both;
-}
-.home-title em { font-style:italic; color:var(--moss); }
-
-.nav-buttons { display:flex; flex-direction:column; gap:10px; }
-
-.nav-btn {
-  display:flex; align-items:center; justify-content:space-between;
-  padding:20px 22px; border-radius:14px; border:none;
-  cursor:pointer; text-align:left;
-  transition:transform 0.15s ease;
-  animation: fadeUp 0.5s ease both;
-}
-.nav-btn:nth-child(1) { animation-delay:0.2s; }
-.nav-btn:nth-child(2) { animation-delay:0.28s; }
-.nav-btn:nth-child(3) { animation-delay:0.36s; }
-.nav-btn:active { transform:scale(0.98); }
-
-.nav-btn-left { display:flex; flex-direction:column; gap:3px; }
-.nav-btn-icon { font-size:20px; margin-bottom:5px; display:block; line-height:1; }
-.nav-btn-title { font-family:'DM Serif Display',serif; font-size:19px; font-weight:400; letter-spacing:-0.01em; line-height:1; }
-.nav-btn-sub   { font-size:12px; font-weight:400; margin-top:2px; opacity:0.55; }
-.nav-btn-arrow { font-size:20px; opacity:0.3; flex-shrink:0; transition:transform 0.2s,opacity 0.2s; }
-.nav-btn:hover .nav-btn-arrow { transform:translateX(3px); opacity:0.6; }
-
-.btn-plan      { background:var(--moss-lt);  border:1px solid rgba(74,107,58,0.15);  box-shadow:0 2px 10px rgba(74,107,58,0.07); }
-.btn-strength  { background:var(--amber-lt); border:1px solid rgba(138,104,48,0.15); box-shadow:0 2px 10px rgba(138,104,48,0.07); }
-.btn-nutrition { background:var(--slate-lt); border:1px solid rgba(58,85,104,0.15);  box-shadow:0 2px 10px rgba(58,85,104,0.07); }
-
-.btn-plan      .nav-btn-title, .btn-plan      .nav-btn-sub, .btn-plan      .nav-btn-arrow { color:var(--moss); }
-.btn-strength  .nav-btn-title, .btn-strength  .nav-btn-sub, .btn-strength  .nav-btn-arrow { color:var(--amber); }
-.btn-nutrition .nav-btn-title, .btn-nutrition .nav-btn-sub, .btn-nutrition .nav-btn-arrow { color:var(--slate); }
-
-/* ── INNER PAGES ── */
-.inner-page { flex:1; display:flex; flex-direction:column; overflow:hidden; }
-
-.inner-header {
-  display:flex; align-items:center; gap:12px;
-  padding: max(52px, env(safe-area-inset-top, 52px)) 20px 16px;
-  border-bottom:1px solid var(--border);
-  flex-shrink:0; background:var(--bg);
+.strip-day-num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--text2);
+  line-height: 1;
 }
 
-.back-btn {
-  display:flex; align-items:center; justify-content:center;
-  width:34px; height:34px; border-radius:10px;
-  background:var(--surface); border:1px solid var(--border);
-  cursor:pointer; font-size:18px; color:var(--mid);
-  flex-shrink:0; transition:background 0.15s;
+.strip-day.today-day .strip-day-num { color: var(--accent); }
+
+.strip-day-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--border2);
+  margin: 5px auto 0;
 }
-.back-btn:active { background:var(--border); }
 
-.inner-header-title { font-family:'DM Serif Display',serif; font-size:20px; color:var(--ink); letter-spacing:-0.01em; }
-
-.inner-scroll { flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; padding:20px 20px 56px; }
-
-/* ── TRAINING PLAN ── */
-.week-block { margin-bottom:28px; }
-
-.week-heading { display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; }
-.week-title   { font-family:'DM Serif Display',serif; font-size:17px; color:var(--ink); letter-spacing:-0.01em; }
-.week-km      { font-size:12px; font-weight:500; color:var(--moss); background:var(--moss-lt); padding:3px 9px; border-radius:10px; }
-
-.week-location { font-size:11px; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:var(--faint); margin-bottom:8px; }
-
-.day-list { display:flex; flex-direction:column; gap:2px; }
-
-.day-item {
-  display:grid; grid-template-columns:58px auto 1fr;
-  align-items:start; gap:8px;
-  padding:11px 14px; background:var(--surface);
-  border-radius:10px; border:1px solid var(--border);
-}
-.day-item.run    { border-left:3px solid var(--moss); }
-.day-item.rest   { border-left:3px solid var(--border); opacity:0.65; }
-.day-item.recov  { border-left:3px solid var(--amber); }
-.day-item.flight { border-left:3px solid var(--slate); }
-.day-item.arrival{ border-left:3px solid #6A9AB0; }
-.day-item.hills  { border-left:3px solid #5A8A45; }
-
-.di-date { font-size:11px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:var(--faint); padding-top:2px; }
-
-.di-tag {
-  font-size:10px; font-weight:500; letter-spacing:0.08em;
-  text-transform:uppercase; padding:3px 7px; border-radius:4px;
-  white-space:nowrap; line-height:1.2; height:fit-content;
-}
-.tag-run    { background:rgba(74,107,58,0.12);  color:var(--moss); }
-.tag-rest   { background:rgba(0,0,0,0.04);      color:var(--faint); }
-.tag-recov  { background:rgba(138,104,48,0.12); color:var(--amber); }
-.tag-flight { background:rgba(58,85,104,0.12);  color:var(--slate); }
-.tag-arriv  { background:rgba(106,154,176,0.15);color:#4A7A95; }
-.tag-hills  { background:rgba(74,107,58,0.12);  color:var(--moss); }
-
-.di-detail { font-size:12.5px; color:var(--mid); line-height:1.5; }
-.di-detail strong { color:var(--ink); font-weight:500; }
-
-.section-note {
-  background:rgba(138,104,48,0.06); border-left:2px solid var(--amber);
-  border-radius:0 6px 6px 0; padding:10px 14px;
-  font-size:12.5px; color:var(--mid); line-height:1.6; margin-top:8px;
-}
-.section-note strong { color:var(--amber); font-weight:500; }
-
-.plan-divider { border:none; border-top:1px solid var(--border); margin:20px 0; }
-
-/* ── S&C ── */
-.sc-principle {
-  background:var(--amber-lt); border:1px solid rgba(138,104,48,0.15);
-  border-radius:10px; padding:14px 16px; margin-bottom:16px;
-}
-.sc-principle-label { font-size:11px; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:var(--amber); margin-bottom:4px; }
-.sc-principle-body  { font-size:13px; color:var(--mid); line-height:1.6; }
-
-.sc-section-title { font-family:'DM Serif Display',serif; font-size:16px; color:var(--ink); margin-bottom:8px; margin-top:20px; letter-spacing:-0.01em; }
-
-.sc-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; overflow:hidden; margin-bottom:6px; }
-
-.sc-card-header { display:flex; align-items:center; justify-content:space-between; padding:13px 16px; cursor:pointer; }
-.sc-card-left   { display:flex; align-items:center; gap:10px; }
-.sc-card-icon   { font-size:17px; }
-.sc-card-title  { font-size:14px; font-weight:500; color:var(--ink); }
-.sc-chevron     { font-size:13px; color:var(--faint); transition:transform 0.2s; }
-.sc-card.open .sc-chevron { transform:rotate(180deg); }
-
-.sc-body { display:none; padding:0 16px 14px; border-top:1px solid var(--border); }
-.sc-card.open .sc-body { display:block; }
-
-.sc-list { list-style:none; display:flex; flex-direction:column; padding-top:10px; }
-.sc-list li {
-  display:flex; justify-content:space-between; align-items:baseline;
-  font-size:13px; color:var(--mid); padding:6px 0;
-  border-bottom:1px solid var(--border); gap:8px;
-}
-.sc-list li:last-child { border-bottom:none; }
-.sc-ex-name { color:var(--ink); font-weight:400; }
-.sc-ex-sets { font-size:11px; font-weight:500; color:var(--faint); white-space:nowrap; }
+.strip-day-dot.run-dot      { background: var(--accent); }
+.strip-day-dot.strength-dot { background: var(--slate); }
+.strip-day-dot.rest-dot     { background: var(--bg3); }
 
 /* ── NUTRITION ── */
-.nutr-highlights { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px; }
+.macro-bar-wrap { margin: 8px 0 16px; }
 
-.nutr-stat {
-  background:var(--slate-lt); border:1px solid rgba(58,85,104,0.15);
-  border-radius:10px; padding:13px 14px;
+.macro-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
 }
-.nutr-stat-label { font-size:11px; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:var(--slate); margin-bottom:3px; }
-.nutr-stat-val   { font-family:'DM Serif Display',serif; font-size:22px; color:var(--slate); letter-spacing:-0.01em; line-height:1; }
-.nutr-stat-sub   { font-size:11px; color:var(--mid); margin-top:2px; }
 
-.nutr-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:15px 16px; margin-bottom:8px; }
-.nutr-card-top { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
-.nutr-icon  { font-size:19px; }
-.nutr-title { font-family:'DM Serif Display',serif; font-size:16px; color:var(--ink); letter-spacing:-0.01em; }
+.macro-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--text2);
+  min-width: 80px;
+}
 
-.nutr-list { list-style:none; display:flex; flex-direction:column; gap:5px; }
-.nutr-list li { font-size:13px; color:var(--mid); padding-left:14px; position:relative; line-height:1.5; }
-.nutr-list li::before { content:'—'; position:absolute; left:0; color:var(--faint); font-size:10px; top:1px; }
-.nutr-list li strong { color:var(--ink); font-weight:500; }
+.macro-bar-track {
+  flex: 1;
+  height: 6px;
+  background: var(--bg3);
+  border-radius: 3px;
+  overflow: hidden;
+}
 
-/* ── ANIMATIONS ── */
-@keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
+.macro-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+}
 
-.page-enter { animation:slideIn 0.3s cubic-bezier(0.22,0.8,0.32,1) both; }
-.page-exit  { animation:slideOut 0.22s ease both; }
-@keyframes slideIn  { from { opacity:0; transform:translateX(26px); } to { opacity:1; transform:none; } }
-@keyframes slideOut { from { opacity:1; transform:none; } to { opacity:0; transform:translateX(-16px); } }
+.macro-value {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text2);
+  min-width: 60px;
+  text-align: right;
+}
+
+.principle-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  align-items: flex-start;
+}
+
+.principle-item:last-child { border-bottom: none; }
+
+.principle-num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--accent);
+  line-height: 1;
+  min-width: 24px;
+  margin-top: 1px;
+}
+
+.principle-text { font-size: 14px; color: var(--text2); line-height: 1.55; }
+.principle-text strong { color: var(--text); font-weight: 600; }
+
+/* ── PHASE OVERVIEW ── */
+.phase-banner {
+  border-radius: var(--radius-lg);
+  padding: 18px 22px;
+  margin-bottom: 10px;
+  border: 1px solid var(--border);
+}
+
+.phase-banner.phase-recovery { background: var(--bg2); border-left: 3px solid var(--text3); }
+.phase-banner.phase-base     { background: var(--sage-dim); border-left: 3px solid var(--sage); }
+.phase-banner.phase-build    { background: var(--amber-dim); border-left: 3px solid var(--amber); }
+.phase-banner.phase-peak     { background: var(--accent-dim); border-left: 3px solid var(--accent); }
+.phase-banner.phase-taper    { background: var(--slate-dim); border-left: 3px solid var(--slate); }
+
+.phase-banner-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.phase-banner-desc {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.5;
+}
+
+/* ── S&C EXERCISE TABLE ── */
+.exercise-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+.exercise-table th {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text3);
+  text-align: left;
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--border);
+  font-weight: 400;
+}
+
+.exercise-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text2);
+  vertical-align: top;
+}
+
+.exercise-table tr:last-child td { border-bottom: none; }
+.exercise-table td:first-child { color: var(--text); font-weight: 600; }
+
+/* ── PROGRESS TRACKER ── */
+.progress-note {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  color: var(--text3);
+  margin-bottom: 12px;
+}
+
+.metric-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.metric-row:last-child { border-bottom: none; }
+
+.metric-date {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text3);
+  min-width: 90px;
+}
+
+.metric-val {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--text);
+  min-width: 70px;
+}
+
+.metric-note { font-size: 13px; color: var(--text2); }
+
+/* ── BUTTONS ── */
+.btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 9px 18px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border2);
+  cursor: pointer;
+  transition: all 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: transparent;
+  color: var(--text2);
+}
+
+.btn:hover { background: var(--bg2); color: var(--text); }
+
+.btn-accent {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.btn-accent:hover { background: var(--accent2); border-color: var(--accent2); color: #fff; }
+
+/* ── FORMS ── */
+input, select, textarea {
+  background: var(--bg);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  padding: 8px 11px;
+  outline: none;
+  transition: border-color 0.15s;
+  width: 100%;
+}
+
+input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text3); display: block; margin-bottom: 5px; }
+.form-group { margin-bottom: 14px; }
+
+/* ── TOAST ── */
+.toast {
+  position: fixed;
+  bottom: 20px; right: 20px;
+  background: var(--text);
+  color: var(--bg);
+  border-radius: var(--radius);
+  padding: 10px 16px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  z-index: 300;
+  transform: translateY(60px);
+  opacity: 0;
+  transition: all 0.2s;
+  pointer-events: none;
+}
+
+.toast.show { transform: translateY(0); opacity: 1; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  header { padding: 0 14px; gap: 0; }
+  .logo { margin-right: 16px; font-size: 17px; }
+  nav a { padding: 0 10px; font-size: 10px; }
+  .race-countdown { display: none; }
+  .container { padding: 22px 16px; }
+  .page-title { font-size: 28px; }
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .week-strip { grid-template-columns: repeat(7, 1fr); gap: 4px; }
+  .strip-day { padding: 6px 3px; }
+  .today-hero { padding: 20px 18px; }
+  .today-heading { font-size: 24px; }
+}
+
+@media (max-width: 480px) {
+  nav a { padding: 0 7px; font-size: 9px; letter-spacing: 0.04em; }
+  .logo { font-size: 15px; margin-right: 10px; }
+}
+
+/* ── CURRENT WEEK HIGHLIGHT ── */
+.accordion-item.current-week {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-dim), var(--shadow);
+}
+
+.current-week-tag {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  background: var(--accent);
+  color: #fff;
+  padding: 2px 7px;
+  border-radius: 3px;
+}
+
+/* ── TEMPLATE WEEK ── */
+.template-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--text3);
+  font-style: italic;
+  padding: 14px 0 4px;
+  text-align: center;
+  border-top: 1px dashed var(--border2);
+  margin-top: 10px;
+}
+
+.template-session {
+  background: var(--bg2);
+  border-radius: var(--radius);
+  padding: 8px 12px;
+  margin: 6px 0;
+  font-size: 13px;
+  color: var(--text2);
+}
+
+.template-session strong { color: var(--text); }
 </style>
 </head>
 <body>
 
-<!-- HOME -->
-<div class="page active" id="home">
-  <div class="home-header">
-    <div class="home-eyebrow">Summer 2026</div>
-    <div class="home-title">JS — <em>Training</em> Plan</div>
+<header>
+  <div class="logo">Trail<span>&</span>Table</div>
+  <nav>
+    <a onclick="showPage('today')"    id="nav-today"    class="active">Today</a>
+    <a onclick="showPage('running')"  id="nav-running">Running</a>
+    <a onclick="showPage('strength')" id="nav-strength">Strength</a>
+    <a onclick="showPage('nutrition')"id="nav-nutrition">Nutrition</a>
+  </nav>
+  <div class="header-right">
+    <div class="race-countdown" id="race-countdown"></div>
   </div>
-  <div class="nav-buttons">
-    <button class="nav-btn btn-plan" onclick="navigate('plan')">
-      <div class="nav-btn-left">
-        <span class="nav-btn-icon">🏔</span>
-        <div class="nav-btn-title">Training Plan</div>
-        <div class="nav-btn-sub">Week by week · Runs &amp; sessions</div>
-      </div>
-      <div class="nav-btn-arrow">›</div>
-    </button>
-    <button class="nav-btn btn-strength" onclick="navigate('strength')">
-      <div class="nav-btn-left">
-        <span class="nav-btn-icon">💪</span>
-        <div class="nav-btn-title">Strength &amp; Conditioning</div>
-        <div class="nav-btn-sub">Home sessions · Bodyweight</div>
-      </div>
-      <div class="nav-btn-arrow">›</div>
-    </button>
-    <button class="nav-btn btn-nutrition" onclick="navigate('nutrition')">
-      <div class="nav-btn-left">
-        <span class="nav-btn-icon">🥗</span>
-        <div class="nav-btn-title">Nutrition</div>
-        <div class="nav-btn-sub">Fuelling · Recovery · Race day</div>
-      </div>
-      <div class="nav-btn-arrow">›</div>
-    </button>
-  </div>
-</div>
+</header>
 
-<!-- TRAINING PLAN -->
-<div class="page" id="plan">
-  <div class="inner-page">
-    <div class="inner-header">
-      <div class="back-btn" onclick="goHome()">‹</div>
-      <div class="inner-header-title">Training Plan</div>
+<!-- ════════════════════════════════════════
+     TODAY PAGE
+════════════════════════════════════════ -->
+<div class="page active" id="page-today">
+  <div class="container">
+    <div class="today-hero" id="today-hero">
+      <div class="today-date" id="today-date-label"></div>
+      <div class="today-heading" id="today-heading">Loading...</div>
+      <div class="today-phase" id="today-phase-label"></div>
     </div>
-    <div class="inner-scroll">
 
-      <!-- WEEK 1 -->
-      <div class="week-block">
-        <div class="week-heading">
-          <div class="week-title">Week 1 — Recovery</div>
-          <div class="week-km">20km</div>
-        </div>
-        <div class="week-location">📍 Australia · 18–24 May</div>
-        <div class="day-list">
-          <div class="day-item rest">
-            <div class="di-date">Mon 18</div>
-            <div class="di-tag tag-rest">Rest</div>
-            <div class="di-detail">Full rest. Walk if you want. Hydrate, eat well, legs up.</div>
-          </div>
-          <div class="day-item run">
-            <div class="di-date">Tue 19</div>
-            <div class="di-tag tag-run">Easy Run</div>
-            <div class="di-detail"><strong>6km · flat or gentle trail.</strong> Conversational pace. First run post-UTA — cut short without guilt if needed.</div>
-          </div>
-          <div class="day-item recov">
-            <div class="di-date">Wed 20</div>
-            <div class="di-tag tag-recov">Recovery</div>
-            <div class="di-detail">Foam roll quads, IT bands, calves. Full stretch routine — 10 min.</div>
-          </div>
-          <div class="day-item run">
-            <div class="di-date">Thu 21</div>
-            <div class="di-tag tag-run">Easy Run</div>
-            <div class="di-detail"><strong>6km.</strong> Same as Tuesday. Note if legs feel better — they should.</div>
-          </div>
-          <div class="day-item run">
-            <div class="di-date">Fri 22</div>
-            <div class="di-tag tag-run">Easy Run</div>
-            <div class="di-detail"><strong>8km · longest of the week.</strong> Find a nice trail. Walk anything that feels like effort.</div>
-          </div>
-          <div class="day-item rest">
-            <div class="di-date">Sat 23</div>
-            <div class="di-tag tag-rest">Rest</div>
-            <div class="di-detail">Walk, stretch, pack compression socks for the flight.</div>
-          </div>
-          <div class="day-item rest">
-            <div class="di-date">Sun 24</div>
-            <div class="di-tag tag-rest">Rest</div>
-            <div class="di-detail">Gentle walk. Hydrate well ahead of Tuesday's flight.</div>
-          </div>
-        </div>
-        <div class="section-note"><strong>Note:</strong> Appetite may be suppressed post-race. Eat regularly regardless — protein every meal.</div>
-      </div>
+    <div class="week-strip" id="week-strip"></div>
 
-      <hr class="plan-divider">
+    <div class="grid-auto" id="today-stats" style="margin-bottom:20px"></div>
 
-      <!-- WEEK 2 -->
-      <div class="week-block">
-        <div class="week-heading">
-          <div class="week-title">Week 2 — Flight + Return</div>
-          <div class="week-km">24km</div>
-        </div>
-        <div class="week-location">✈️ Australia → UK · 25–31 May</div>
-        <div class="day-list">
-          <div class="day-item run">
-            <div class="di-date">Mon 25</div>
-            <div class="di-tag tag-run">Easy Run</div>
-            <div class="di-detail"><strong>7km.</strong> Last run on Australian soil. Keep it easy and enjoyable.</div>
-          </div>
-          <div class="day-item flight">
-            <div class="di-date">Tue 26</div>
-            <div class="di-tag tag-flight">✈︎ Flight</div>
-            <div class="di-detail">Zero running. Compression socks full flight. Walk aisle every 90 min. 300ml water per hour.</div>
-          </div>
-          <div class="day-item arrival">
-            <div class="di-date">Wed 27</div>
-            <div class="di-tag tag-arriv">Arrival</div>
-            <div class="di-detail">Write it off. 20 min walk in daylight if possible — fastest jet lag reset.</div>
-          </div>
-          <div class="day-item run">
-            <div class="di-date">Thu 28</div>
-            <div class="di-tag tag-run">Easy Run</div>
-            <div class="di-detail"><strong>4km.</strong> About daylight and movement, not fitness. Swap for a walk if still wrecked.</div>
-          </div>
-          <div class="day-item run">
-            <div class="di-date">Fri 29</div>
-            <div class="di-tag tag-run">Easy Run</div>
-            <div class="di-detail"><strong>5km.</strong> Days 2–3 post-arrival often harder than day 1 — no surprise if this feels tough.</div>
-          </div>
-          <div class="day-item rest">
-            <div class="di-date">Sat 30</div>
-            <div class="di-tag tag-rest">Rest</div>
-            <div class="di-detail">Rest. Stretch, foam roll, eat well.</div>
-          </div>
-          <div class="day-item hills">
-            <div class="di-date">Sun 31</div>
-            <div class="di-tag tag-hills">Easy + Hills</div>
-            <div class="di-detail"><strong>8km · Leckhampton or Crickley.</strong> Walk all steep climbs, jog the flat. First Cotswolds run.</div>
-          </div>
-        </div>
-        <div class="section-note"><strong>Phase 1 begins Mon 1 June.</strong> Sunday is the bridge — arrive at it feeling recovered.</div>
-      </div>
-
+    <div id="today-sessions-wrap">
+      <div class="page-subtitle">Today's Sessions</div>
+      <div class="today-sessions" id="today-sessions"></div>
     </div>
+
+    <div id="today-week-detail"></div>
   </div>
 </div>
 
-<!-- STRENGTH & CONDITIONING -->
-<div class="page" id="strength">
-  <div class="inner-page">
-    <div class="inner-header">
-      <div class="back-btn" onclick="goHome()">‹</div>
-      <div class="inner-header-title">Strength &amp; Conditioning</div>
-    </div>
-    <div class="inner-scroll">
+<!-- ════════════════════════════════════════
+     RUNNING PAGE
+════════════════════════════════════════ -->
+<div class="page" id="page-running">
+  <div class="container">
+    <div class="page-title">Running Plan</div>
+    <div class="page-subtitle" id="running-subtitle"></div>
 
-      <div class="sc-principle">
-        <div class="sc-principle-label">The Approach</div>
-        <div class="sc-principle-body">2× per week, 35–40 min, home/bodyweight only. Trail-specific — single-leg strength, hip stability, core. No gym needed.</div>
-      </div>
+    <div id="phase-banners" style="margin-bottom:28px"></div>
 
-      <div class="sc-section-title">Session A — Lower Body</div>
-      <div class="sc-card" onclick="toggleCard(this)">
-        <div class="sc-card-header">
-          <div class="sc-card-left"><div class="sc-card-icon">🦵</div><div class="sc-card-title">Lower Body</div></div>
-          <div class="sc-chevron">▾</div>
-        </div>
-        <div class="sc-body">
-          <ul class="sc-list">
-            <li><span class="sc-ex-name">Single-leg squats</span><span class="sc-ex-sets">3 × 10 each</span></li>
-            <li><span class="sc-ex-name">Bulgarian split squats</span><span class="sc-ex-sets">3 × 8 each</span></li>
-            <li><span class="sc-ex-name">Step-ups with knee drive</span><span class="sc-ex-sets">3 × 12 each</span></li>
-            <li><span class="sc-ex-name">Glute bridge (→ single-leg)</span><span class="sc-ex-sets">3 × 15</span></li>
-            <li><span class="sc-ex-name">Eccentric calf drops off step</span><span class="sc-ex-sets">3 × 15</span></li>
-            <li><span class="sc-ex-name">Lateral band walks</span><span class="sc-ex-sets">3 × 15 each</span></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="sc-section-title">Session B — Core</div>
-      <div class="sc-card" onclick="toggleCard(this)">
-        <div class="sc-card-header">
-          <div class="sc-card-left"><div class="sc-card-icon">🧱</div><div class="sc-card-title">Core &amp; Stability</div></div>
-          <div class="sc-chevron">▾</div>
-        </div>
-        <div class="sc-body">
-          <ul class="sc-list">
-            <li><span class="sc-ex-name">Dead bug</span><span class="sc-ex-sets">3 × 10 each</span></li>
-            <li><span class="sc-ex-name">Bird dog</span><span class="sc-ex-sets">3 × 10 each</span></li>
-            <li><span class="sc-ex-name">Side plank with hip dip</span><span class="sc-ex-sets">3 × 12 each</span></li>
-            <li><span class="sc-ex-name">Hollow body hold</span><span class="sc-ex-sets">3 × 20s</span></li>
-            <li><span class="sc-ex-name">Single-arm plank</span><span class="sc-ex-sets">2 × 25s each</span></li>
-            <li><span class="sc-ex-name">Copenhagen plank</span><span class="sc-ex-sets">3 × 15s each</span></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="sc-section-title">Upper Body &amp; Posture</div>
-      <div class="sc-card" onclick="toggleCard(this)">
-        <div class="sc-card-header">
-          <div class="sc-card-left"><div class="sc-card-icon">💪</div><div class="sc-card-title">Upper &amp; Posture</div></div>
-          <div class="sc-chevron">▾</div>
-        </div>
-        <div class="sc-body">
-          <ul class="sc-list">
-            <li><span class="sc-ex-name">Push-ups</span><span class="sc-ex-sets">3 × 80% effort</span></li>
-            <li><span class="sc-ex-name">Prone Y-T-W raises</span><span class="sc-ex-sets">2 × 10 each</span></li>
-            <li><span class="sc-ex-name">Resistance band rows</span><span class="sc-ex-sets">3 × 15</span></li>
-            <li><span class="sc-ex-name">Shoulder tap plank</span><span class="sc-ex-sets">3 × 10 each</span></li>
-          </ul>
-        </div>
-      </div>
-
-    </div>
+    <div id="running-weeks"></div>
   </div>
 </div>
 
-<!-- NUTRITION -->
-<div class="page" id="nutrition">
-  <div class="inner-page">
-    <div class="inner-header">
-      <div class="back-btn" onclick="goHome()">‹</div>
-      <div class="inner-header-title">Nutrition</div>
+<!-- ════════════════════════════════════════
+     STRENGTH PAGE
+════════════════════════════════════════ -->
+<div class="page" id="page-strength">
+  <div class="container">
+    <div class="page-title">Strength & Conditioning</div>
+    <div class="page-subtitle">Bodyweight — 2 sessions/week (Mon + Tue, flexible)</div>
+
+    <div style="margin-bottom:24px">
+      <p style="font-size:14px;color:var(--text2);line-height:1.65;max-width:620px">
+        All sessions are bodyweight. Focus is injury resilience, running economy, and postural durability — not maximum strength. Form over load, always. Sessions evolve across phases — check the phase notes for when sessions change.
+      </p>
     </div>
-    <div class="inner-scroll">
 
-      <div class="nutr-highlights">
-        <div class="nutr-stat">
-          <div class="nutr-stat-label">Daily Protein</div>
-          <div class="nutr-stat-val">1.8g</div>
-          <div class="nutr-stat-sub">per kg bodyweight</div>
-        </div>
-        <div class="nutr-stat">
-          <div class="nutr-stat-label">Fuel from</div>
-          <div class="nutr-stat-val">75 min</div>
-          <div class="nutr-stat-sub">on every run</div>
-        </div>
-      </div>
-
-      <div class="nutr-card">
-        <div class="nutr-card-top">
-          <div class="nutr-icon">🏃</div>
-          <div class="nutr-title">Run Fuelling by Duration</div>
-        </div>
-        <ul class="nutr-list">
-          <li><strong>Under 75 min</strong> — nothing needed. Water only.</li>
-          <li><strong>75–120 min</strong> — 1 gel or 2 medjool dates at 60 min.</li>
-          <li><strong>2–3 hrs</strong> — 30–40g carbs/hr from 45 min. Gels + real food.</li>
-          <li><strong>3–5 hrs</strong> — 40–60g carbs/hr. Boiled potatoes, PB sandwich, rice balls.</li>
-          <li><strong>Race (8–12 hrs)</strong> — gels first 3hrs, then real food. Caffeinated gels after 4hrs only.</li>
-        </ul>
-      </div>
-
-      <div class="nutr-card">
-        <div class="nutr-card-top">
-          <div class="nutr-icon">🥩</div>
-          <div class="nutr-title">Daily Recovery Nutrition</div>
-        </div>
-        <ul class="nutr-list">
-          <li>1.8g protein per kg — spread across meals</li>
-          <li>Carb-load night before and morning of long runs</li>
-          <li>Within 30–45 min post-run: protein + carbs (chocolate milk works)</li>
-          <li>Add sodium to post-run meals — replaces sweat losses</li>
-          <li>Tart cherry juice reduces muscle soreness measurably</li>
-        </ul>
-      </div>
-
-      <div class="nutr-card">
-        <div class="nutr-card-top">
-          <div class="nutr-icon">💧</div>
-          <div class="nutr-title">Hydration</div>
-        </div>
-        <ul class="nutr-list">
-          <li>500–700ml per hour on easy runs</li>
-          <li>600–800ml per hour on long runs and in heat</li>
-          <li>Electrolyte tabs on anything over 90 min</li>
-          <li>Drink to thirst on race day — don't force fluids</li>
-          <li>Pale yellow urine is the target</li>
-        </ul>
-      </div>
-
-      <div class="nutr-card">
-        <div class="nutr-card-top">
-          <div class="nutr-icon">⚡</div>
-          <div class="nutr-title">Supplements</div>
-        </div>
-        <ul class="nutr-list">
-          <li>Omega-3 fish oil daily — reduces systemic inflammation</li>
-          <li>Creatine 3–5g daily — aids muscle recovery</li>
-          <li>Collagen + vitamin C before bed — supports tendon repair</li>
-          <li>Beetroot shots 2–3hrs pre-race — nitric oxide boost</li>
-          <li>Avoid alcohol during heavy training weeks</li>
-        </ul>
-      </div>
-
-    </div>
+    <div id="strength-sessions"></div>
   </div>
 </div>
+
+<!-- ════════════════════════════════════════
+     NUTRITION PAGE
+════════════════════════════════════════ -->
+<div class="page" id="page-nutrition">
+  <div class="container">
+    <div class="page-title">Nutrition</div>
+    <div class="page-subtitle">Macro targets · Principles · Race & long run fuelling</div>
+
+    <div id="nutrition-content"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
 
 <script>
-let current = 'home';
+/* ═══════════════════════════════════════════
+   SITE ENGINE
+   Do not edit below this line unless changing
+   layout or features. All content lives in
+   data.js above the engine section.
+═══════════════════════════════════════════ */
 
-function navigate(id) {
-  const from = document.getElementById(current);
-  const to   = document.getElementById(id);
-  from.classList.add('page-exit');
-  setTimeout(() => {
-    from.classList.remove('active','page-exit');
-    to.classList.add('active','page-enter');
-    setTimeout(() => to.classList.remove('page-enter'), 300);
-    current = id;
-  }, 200);
+// ── UTILS ────────────────────────────────
+function $(id) { return document.getElementById(id); }
+
+function toast(msg) {
+  const el = $('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2200);
 }
 
-function goHome() { navigate('home'); }
+function isoToday() {
+  return new Date().toISOString().slice(0,10);
+}
 
-function toggleCard(card) { card.classList.toggle('open'); }
+function getMonday(d) {
+  const dt = new Date(d);
+  const day = dt.getDay();
+  const diff = (day === 0) ? -6 : 1 - day;
+  dt.setDate(dt.getDate() + diff);
+  return dt;
+}
+
+function addDays(d, n) {
+  const dt = new Date(d);
+  dt.setDate(dt.getDate() + n);
+  return dt;
+}
+
+function isoDate(d) { return d.toISOString().slice(0,10); }
+
+function daysBetween(a, b) {
+  return Math.ceil((new Date(b) - new Date(a)) / 86400000);
+}
+
+function formatDateLong(iso) {
+  const [y,m,d] = iso.split('-');
+  return new Date(y, m-1, d).toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long'});
+}
+
+function formatDateShort(d) {
+  return d.toLocaleDateString('en-GB', {day:'numeric', month:'short'});
+}
+
+// ── STORAGE ──────────────────────────────
+const CHECKS_KEY = 'trainingplan_checks';
+
+function getChecks() {
+  try { return JSON.parse(localStorage.getItem(CHECKS_KEY) || '{}'); } catch { return {}; }
+}
+
+function toggleCheck(key) {
+  const c = getChecks();
+  c[key] = !c[key];
+  localStorage.setItem(CHECKS_KEY, JSON.stringify(c));
+  return c[key];
+}
+
+function isChecked(key) { return !!getChecks()[key]; }
+
+// ── RACE COUNTDOWN ────────────────────────
+function renderCountdown() {
+  const today = new Date(); today.setHours(0,0,0,0);
+  const race = new Date(CONFIG.raceDate); race.setHours(0,0,0,0);
+  const days = Math.ceil((race - today) / 86400000);
+  const el = $('race-countdown');
+  if (days > 0) {
+    el.innerHTML = `<strong>${days}</strong> days to ${CONFIG.raceName}`;
+  } else if (days === 0) {
+    el.innerHTML = `<strong>Race Day!</strong> ${CONFIG.raceName}`;
+  } else {
+    el.innerHTML = CONFIG.raceName + ' completed';
+  }
+}
+
+// ── CURRENT WEEK DETECTION ────────────────
+function getCurrentWeekData() {
+  const today = isoToday();
+  const monday = getMonday(new Date(today));
+
+  for (let i = 0; i < TRAINING_WEEKS.length; i++) {
+    const w = TRAINING_WEEKS[i];
+    if (!w.startDate) continue;
+    const wMon = new Date(w.startDate);
+    const wSun = addDays(wMon, 6);
+    const todayD = new Date(today);
+    if (todayD >= wMon && todayD <= wSun) return { week: w, index: i };
+  }
+  return null;
+}
+
+function getTodaySessions() {
+  const today = isoToday();
+  const todayDate = new Date(today);
+  const DOW = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
+  const dayName = DOW[todayDate.getDay()];
+
+  const weekData = getCurrentWeekData();
+  if (!weekData) return [];
+
+  const week = weekData.week;
+  if (!week.sessions) return [];
+
+  return week.sessions.filter(s => s.day.toLowerCase() === dayName);
+}
+
+// ── SESSION TYPE HELPERS ──────────────────
+function sessionIcon(type) {
+  const icons = { run:'🏃', long:'🏔', quality:'⚡', strength:'💪', rest:'🌿', race:'🏁' };
+  return icons[type] || '📋';
+}
+
+function sessionTypeClass(type) {
+  const m = { run:'type-run', long:'type-long', quality:'type-quality', strength:'type-strength', rest:'type-rest', race:'type-race' };
+  return m[type] || '';
+}
+
+function runTypePill(type) {
+  const m = {
+    easy:     ['pill-neutral', 'Easy'],
+    long:     ['pill-sage',    'Long'],
+    quality:  ['pill-amber',   'Quality'],
+    tempo:    ['pill-amber',   'Tempo'],
+    interval: ['pill-accent',  'Intervals'],
+    race:     ['pill-accent',  'Race'],
+    recovery: ['pill-recovery','Recovery'],
+    strength: ['pill-slate',   'S&C'],
+    rest:     ['pill-recovery','Rest'],
+  };
+  const v = m[type] || ['pill-neutral', type];
+  return `<span class="pill ${v[0]}">${v[1]}</span>`;
+}
+
+// ── TODAY PAGE ────────────────────────────
+function renderToday() {
+  const today = isoToday();
+  const todayDate = new Date(today);
+
+  // Hero
+  $('today-date-label').textContent = formatDateLong(today).toUpperCase();
+
+  const weekData = getCurrentWeekData();
+  const todaySessions = getTodaySessions();
+
+  if (weekData) {
+    const w = weekData.week;
+    const phase = PHASES.find(p => p.id === w.phase) || {};
+    $('today-heading').innerHTML = `Week ${w.week} — <em>${phase.name || w.phase}</em>`;
+    $('today-phase-label').textContent = `${phase.goal || ''} · ${w.volume}km planned this week`;
+  } else {
+    $('today-heading').innerHTML = `<em>${CONFIG.athleteName}</em>`;
+    $('today-phase-label').textContent = 'No active training week found for today';
+  }
+
+  // Week strip
+  const monday = getMonday(todayDate);
+  const dayNames = ['M','T','W','T','F','S','S'];
+  let stripHtml = '';
+  for (let i = 0; i < 7; i++) {
+    const d = addDays(monday, i);
+    const iso = isoDate(d);
+    const isToday = iso === today;
+    const sessions = weekData ? (weekData.week.sessions || []).filter(s => {
+      const DOW = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
+      return s.day.toLowerCase() === DOW[d.getDay()];
+    }) : [];
+    const hasRun = sessions.some(s => ['run','long','quality'].includes(s.type));
+    const hasStr = sessions.some(s => s.type === 'strength');
+    const dotClass = hasRun ? 'run-dot' : hasStr ? 'strength-dot' : 'rest-dot';
+
+    stripHtml += `<div class="strip-day ${isToday ? 'today-day' : ''} ${sessions.length ? 'has-session' : ''}">
+      <div class="strip-day-name">${dayNames[i]}</div>
+      <div class="strip-day-num">${d.getDate()}</div>
+      <div class="strip-day-dot ${dotClass}"></div>
+    </div>`;
+  }
+  $('week-strip').innerHTML = stripHtml;
+
+  // Stats row
+  const daysToRace = daysBetween(today, CONFIG.raceDate);
+  const totalWeeks = TRAINING_WEEKS.length;
+  const completedWeeks = weekData ? weekData.index : 0;
+  $('today-stats').innerHTML = `
+    <div class="stat-tile">
+      <div class="stat-tile-label">Days to race</div>
+      <div class="stat-tile-value">${Math.max(0, daysToRace)}<span>days</span></div>
+      <div class="stat-tile-sub">${CONFIG.raceName}</div>
+    </div>
+    <div class="stat-tile">
+      <div class="stat-tile-label">Training week</div>
+      <div class="stat-tile-value">${weekData ? weekData.week.week : '—'}<span>/ ${totalWeeks}</span></div>
+      <div class="stat-tile-sub">${weekData ? weekData.week.phase : ''}</div>
+    </div>
+    <div class="stat-tile">
+      <div class="stat-tile-label">This week</div>
+      <div class="stat-tile-value">${weekData ? weekData.week.volume : '—'}<span>km</span></div>
+      <div class="stat-tile-sub">planned volume</div>
+    </div>
+    <div class="stat-tile">
+      <div class="stat-tile-label">Peak week</div>
+      <div class="stat-tile-value">65<span>km</span></div>
+      <div class="stat-tile-sub">week 15</div>
+    </div>
+  `;
+
+  // Today's sessions
+  const sessionsEl = $('today-sessions');
+  if (todaySessions.length === 0) {
+    sessionsEl.innerHTML = `<div class="today-session-card type-rest">
+      <div class="today-session-icon">🌿</div>
+      <div>
+        <div class="today-session-title">Rest Day</div>
+        <div class="today-session-desc">Recovery is training. Sleep well, stay mobile, hydrate.</div>
+      </div>
+    </div>`;
+  } else {
+    sessionsEl.innerHTML = todaySessions.map((s, i) => {
+      const key = `today_${today}_${i}`;
+      const checked = isChecked(key);
+      const detailHtml = Array.isArray(s.detail)
+        ? `<ul>${s.detail.map(d => `<li>${d}</li>`).join('')}</ul>`
+        : `<p>${s.detail || ''}</p>`;
+      return `<div class="today-session-card ${sessionTypeClass(s.type)}">
+        <div class="today-session-icon">${sessionIcon(s.type)}</div>
+        <div style="flex:1">
+          <div class="today-session-title">${s.title}${s.distance ? ` — ${s.distance}` : ''}</div>
+          <div class="today-session-desc">${detailHtml}</div>
+          ${s.purpose ? `<div class="session-purpose">${s.purpose}</div>` : ''}
+        </div>
+        <div class="today-session-check ${checked ? 'checked' : ''}" onclick="handleTodayCheck('${key}', this)">${checked ? '✓' : ''}</div>
+      </div>`;
+    }).join('');
+  }
+
+  // Week detail summary
+  if (weekData) {
+    const w = weekData.week;
+    const sessions = w.sessions || [];
+    const days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+    let weekHtml = `<div class="page-subtitle" style="margin-top:24px">This Week</div>
+    <div class="card"><div class="card-label">Week ${w.week} — ${w.volume}km</div>`;
+    days.forEach(day => {
+      const daySessions = sessions.filter(s => s.day.toLowerCase() === day.toLowerCase());
+      if (daySessions.length === 0) return;
+      weekHtml += `<div class="session-day">${day}</div>`;
+      daySessions.forEach((s, i) => {
+        const key = `week_${w.week}_${day}_${i}`;
+        const checked = isChecked(key);
+        const detailHtml = Array.isArray(s.detail)
+          ? `<ul>${s.detail.map(d => `<li>${d}</li>`).join('')}</ul>`
+          : (s.detail || '');
+        weekHtml += `<div class="session-row">
+          <div class="session-check ${checked ? 'checked' : ''}" onclick="handleCheck('week_${w.week}_${day}_${i}', this)">${checked ? '✓' : ''}</div>
+          <div class="session-content">
+            <div class="session-title">${runTypePill(s.type)} ${s.title}${s.distance ? ` <span style="color:var(--text3);font-weight:400">${s.distance}</span>` : ''}</div>
+            <div class="session-detail">${detailHtml}</div>
+            ${s.purpose ? `<div class="session-purpose">${s.purpose}</div>` : ''}
+          </div>
+        </div>`;
+      });
+    });
+    weekHtml += `</div>`;
+    $('today-week-detail').innerHTML = weekHtml;
+  }
+}
+
+function handleTodayCheck(key, el) {
+  const val = toggleCheck(key);
+  el.classList.toggle('checked', val);
+  el.textContent = val ? '✓' : '';
+  toast(val ? '✓ Session logged' : 'Session unchecked');
+}
+
+function handleCheck(key, el) {
+  const val = toggleCheck(key);
+  el.classList.toggle('checked', val);
+  el.textContent = val ? '✓' : '';
+}
+
+// ── RUNNING PAGE ──────────────────────────
+function renderRunning() {
+  // Phase banners
+  let bannersHtml = '';
+  PHASES.forEach(p => {
+    bannersHtml += `<div class="phase-banner phase-${p.id}">
+      <div class="phase-banner-title">${p.name} <span style="font-family:var(--font-mono);font-size:11px;font-weight:400;color:var(--text3)">Weeks ${p.weeks}</span></div>
+      <div class="phase-banner-desc">${p.goal}</div>
+    </div>`;
+  });
+  $('phase-banners').innerHTML = bannersHtml;
+
+  const currentWeek = getCurrentWeekData();
+  const currentWeekNum = currentWeek ? currentWeek.week.week : null;
+
+  $('running-subtitle').textContent = `18-week plan · ${CONFIG.raceName} · ${new Date(CONFIG.raceDate).toLocaleDateString('en-GB', {day:'numeric', month:'long', year:'numeric'})}`;
+
+  let weeksHtml = '';
+  TRAINING_WEEKS.forEach((w, idx) => {
+    const isCurrent = currentWeekNum === w.week;
+    const phase = PHASES.find(p => p.id === w.phase);
+    const phaseColor = { recovery:'var(--text3)', base:'var(--sage)', build:'var(--amber)', peak:'var(--accent)', taper:'var(--slate)' }[w.phase] || 'var(--text3)';
+
+    // Progress bar — sessions completed this week
+    const sessions = w.sessions || [];
+    const totalCheckable = sessions.length;
+    let completedCount = 0;
+    if (isCurrent) {
+      const days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+      days.forEach(day => {
+        sessions.filter(s => s.day.toLowerCase() === day.toLowerCase()).forEach((s, i) => {
+          if (isChecked(`week_${w.week}_${day}_${i}`)) completedCount++;
+        });
+      });
+    }
+    const progressPct = totalCheckable > 0 && isCurrent ? Math.round((completedCount / totalCheckable) * 100) : 0;
+
+    weeksHtml += `<div class="accordion-item ${isCurrent ? 'current-week' : ''}" id="week-acc-${w.week}">
+      <div class="accordion-header" onclick="toggleAccordion('week-acc-${w.week}')">
+        <div class="week-header">
+          <div class="week-number">Week ${w.week}<span>${w.phase}</span></div>
+          <div class="week-meta">
+            ${isCurrent ? '<span class="current-week-tag">Current</span>' : ''}
+            ${w.cutback ? '<span class="pill pill-slate">Cutback</span>' : ''}
+            <span class="week-volume">${w.volume}km</span>
+            ${runTypePill(w.phase === 'race' ? 'race' : 'easy')}
+          </div>
+        </div>
+        <div class="accordion-toggle">▾</div>
+      </div>`;
+
+    if (isCurrent && totalCheckable > 0) {
+      weeksHtml += `<div style="padding:0 20px 10px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+          <span style="font-family:var(--font-mono);font-size:10px;color:var(--text3)">WEEK PROGRESS</span>
+          <span style="font-family:var(--font-mono);font-size:10px;color:var(--text2)">${completedCount}/${totalCheckable} sessions</span>
+        </div>
+        <div class="week-progress"><div class="week-progress-fill" style="width:${progressPct}%"></div></div>
+      </div>`;
+    }
+
+    weeksHtml += `<div class="accordion-body">`;
+
+    if (w.note) {
+      weeksHtml += `<p style="font-size:13px;color:var(--text2);margin:14px 0 10px;font-style:italic">${w.note}</p>`;
+    }
+
+    if (w.sessions && w.sessions.length > 0) {
+      const days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+      days.forEach(day => {
+        const daySessions = w.sessions.filter(s => s.day.toLowerCase() === day.toLowerCase());
+        if (daySessions.length === 0) return;
+        weeksHtml += `<div class="session-day">${day}</div>`;
+        daySessions.forEach((s, i) => {
+          const key = `week_${w.week}_${day}_${i}`;
+          const checked = isChecked(key);
+          const detailHtml = Array.isArray(s.detail)
+            ? `<ul>${s.detail.map(d => `<li>${d}</li>`).join('')}</ul>`
+            : (s.detail || '');
+          weeksHtml += `<div class="session-row">
+            <div class="session-check ${checked ? 'checked' : ''}" onclick="handleCheck('week_${w.week}_${day}_${i}', this)">${checked ? '✓' : ''}</div>
+            <div class="session-content">
+              <div class="session-title">${runTypePill(s.type)} ${s.title}${s.distance ? ` <span style="color:var(--text3);font-weight:400">${s.distance}</span>` : ''}</div>
+              <div class="session-detail">${detailHtml}</div>
+              ${s.purpose ? `<div class="session-purpose">${s.purpose}</div>` : ''}
+            </div>
+          </div>`;
+        });
+      });
+    } else if (w.template) {
+      // Template weeks (Phase 3+)
+      weeksHtml += `<div class="template-label">Template — fill in detail as you approach this week</div>`;
+      w.template.forEach(t => {
+        weeksHtml += `<div class="template-session"><strong>${t.day}:</strong> ${t.session}${t.distance ? ` — ${t.distance}` : ''}</div>`;
+      });
+    }
+
+    weeksHtml += `</div></div>`;
+  });
+
+  $('running-weeks').innerHTML = weeksHtml;
+
+  // Auto-open current week
+  if (currentWeekNum) {
+    const el = $(`week-acc-${currentWeekNum}`);
+    if (el) el.classList.add('open');
+  }
+}
+
+function toggleAccordion(id) {
+  const el = $(id);
+  el.classList.toggle('open');
+}
+
+// ── STRENGTH PAGE ─────────────────────────
+function renderStrength() {
+  let html = '';
+  SC_SESSIONS.forEach(session => {
+    html += `<div class="accordion-item" id="sc-${session.id}">
+      <div class="accordion-header" onclick="toggleAccordion('sc-${session.id}')">
+        <div class="week-header">
+          <div class="week-number">${session.name}<span>${session.when}</span></div>
+          <div class="week-meta">
+            <span class="pill pill-slate">${session.duration}</span>
+            <span class="pill pill-neutral">${session.focus}</span>
+          </div>
+        </div>
+        <div class="accordion-toggle">▾</div>
+      </div>
+      <div class="accordion-body">
+        ${session.note ? `<p style="font-size:13px;color:var(--text2);margin:14px 0 10px;font-style:italic">${session.note}</p>` : ''}
+        <table class="exercise-table">
+          <thead><tr><th>Exercise</th><th>Sets × Reps</th><th>Notes</th></tr></thead>
+          <tbody>
+            ${session.exercises.map(e => `<tr>
+              <td>${e.name}</td>
+              <td style="white-space:nowrap;font-family:var(--font-mono);font-size:12px">${e.sets}</td>
+              <td>${e.notes || ''}</td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
+        <p style="font-family:var(--font-mono);font-size:10px;color:var(--text3);margin-top:12px">Rest ${session.rest} between sets</p>
+      </div>
+    </div>`;
+  });
+
+  // Phase guidance
+  html += `<div class="card" style="margin-top:20px">
+    <div class="card-label">S&C Phase Schedule</div>
+    ${SC_PHASE_GUIDE.map(g => `<div class="principle-item">
+      <div class="principle-num" style="font-size:14px;min-width:90px;font-family:var(--font-mono);font-weight:500;color:var(--slate)">${g.phase}</div>
+      <div class="principle-text">${g.guidance}</div>
+    </div>`).join('')}
+  </div>`;
+
+  $('strength-sessions').innerHTML = html;
+}
+
+// ── NUTRITION PAGE ────────────────────────
+function renderNutrition() {
+  const n = NUTRITION;
+  let html = '';
+
+  // Macro targets
+  html += `<div class="card" style="margin-bottom:14px">
+    <div class="card-label">Daily Macro Targets</div>
+    <div class="grid-2" style="gap:20px;margin-bottom:16px">
+      <div>
+        <p style="font-family:var(--font-mono);font-size:11px;color:var(--text3);margin-bottom:10px;letter-spacing:0.06em">TRAINING DAYS</p>
+        ${renderMacroBars(n.macros.trainingDay)}
+      </div>
+      <div>
+        <p style="font-family:var(--font-mono);font-size:11px;color:var(--text3);margin-bottom:10px;letter-spacing:0.06em">REST DAYS</p>
+        ${renderMacroBars(n.macros.restDay)}
+      </div>
+    </div>
+    <p style="font-size:13px;color:var(--text2);line-height:1.6">${n.macros.note}</p>
+  </div>`;
+
+  // Principles
+  html += `<div class="card" style="margin-bottom:14px">
+    <div class="card-label">Core Principles</div>
+    ${n.principles.map((p, i) => `<div class="principle-item">
+      <div class="principle-num">${i+1}</div>
+      <div class="principle-text"><strong>${p.title}.</strong> ${p.detail}</div>
+    </div>`).join('')}
+  </div>`;
+
+  // Long run nutrition
+  html += `<div class="card" style="margin-bottom:14px">
+    <div class="card-label">Long Run & Trail Nutrition</div>
+    ${n.longRunNutrition.map(item => `<div class="principle-item">
+      <div class="principle-num" style="color:var(--sage);font-size:14px;font-family:var(--font-mono);font-weight:500;min-width:90px">${item.when}</div>
+      <div class="principle-text">${item.detail}</div>
+    </div>`).join('')}
+  </div>`;
+
+  // Race nutrition
+  html += `<div class="card">
+    <div class="card-label">Race Week & Race Day</div>
+    ${n.raceNutrition.map(item => `<div class="principle-item">
+      <div class="principle-num" style="color:var(--accent);font-size:14px;font-family:var(--font-mono);font-weight:500;min-width:90px">${item.when}</div>
+      <div class="principle-text">${item.detail}</div>
+    </div>`).join('')}
+  </div>`;
+
+  $('nutrition-content').innerHTML = html;
+}
+
+function renderMacroBars(macros) {
+  const items = [
+    { label: 'Protein',      value: macros.protein,  unit: 'g', color: '#c4541a', max: 200 },
+    { label: 'Carbohydrate', value: macros.carbs,    unit: 'g', color: '#b8860b', max: 350 },
+    { label: 'Fat',          value: macros.fat,      unit: 'g', color: '#5a7a5e', max: 120 },
+  ];
+  return `<div class="macro-bar-wrap">${items.map(m => `
+    <div class="macro-row">
+      <div class="macro-label">${m.label}</div>
+      <div class="macro-bar-track">
+        <div class="macro-bar-fill" style="width:${Math.min(100, Math.round(m.value/m.max*100))}%;background:${m.color}"></div>
+      </div>
+      <div class="macro-value">${m.value}${m.unit}</div>
+    </div>`).join('')}
+    <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);margin-top:8px">≈ ${macros.calories} kcal</div>
+  </div>`;
+}
+
+// ── NAV ──────────────────────────────────
+const PAGES = ['today','running','strength','nutrition'];
+
+function showPage(id) {
+  PAGES.forEach(p => {
+    $('page-'+p).classList.toggle('active', p === id);
+    $('nav-'+p).classList.toggle('active', p === id);
+  });
+  if (id === 'running')   renderRunning();
+  if (id === 'strength')  renderStrength();
+  if (id === 'nutrition') renderNutrition();
+}
+
+// ── INIT ─────────────────────────────────
+renderCountdown();
+renderToday();
 </script>
 </body>
 </html>
