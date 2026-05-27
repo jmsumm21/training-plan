@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Training Plan</title>
+<title>JS — Training Plan</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="data.js"></script>
@@ -529,61 +529,9 @@ nav a.active { color: var(--bg); border-bottom-color: var(--accent2); }
   border-color: var(--accent);
 }
 
-/* ── WEEK OVERVIEW STRIP ── */
-.week-strip {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 6px;
-  margin-bottom: 20px;
-}
+/* ── WEEK OVERVIEW STRIP — removed ── */
 
-.strip-day {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 8px 6px;
-  text-align: center;
-  box-shadow: var(--shadow);
-}
-
-.strip-day.today-day {
-  border-color: var(--accent);
-  background: var(--accent-dim);
-}
-
-.strip-day.has-session { background: var(--bg2); }
-
-.strip-day-name {
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text3);
-  margin-bottom: 4px;
-}
-
-.strip-day-num {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 16px;
-  color: var(--text2);
-  line-height: 1;
-}
-
-.strip-day.today-day .strip-day-num { color: var(--accent); }
-
-.strip-day-dot {
-  width: 5px; height: 5px;
-  border-radius: 50%;
-  background: var(--border2);
-  margin: 5px auto 0;
-}
-
-.strip-day-dot.run-dot      { background: var(--accent); }
-.strip-day-dot.strength-dot { background: var(--slate); }
-.strip-day-dot.rest-dot     { background: var(--bg3); }
-
-/* ── NUTRITION ── */
+/* ── COMPACT STATS ROW ── */
 .macro-bar-wrap { margin: 8px 0 16px; }
 
 .macro-row {
@@ -807,16 +755,19 @@ label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.07em; 
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
   header { padding: 0 14px; gap: 0; }
-  .logo { margin-right: 16px; font-size: 17px; }
+  .logo { margin-right: 16px; font-size: 15px; }
   nav a { padding: 0 10px; font-size: 10px; }
   .race-countdown { display: none; }
   .container { padding: 22px 16px; }
   .page-title { font-size: 28px; }
   .grid-2, .grid-3 { grid-template-columns: 1fr; }
-  .week-strip { grid-template-columns: repeat(7, 1fr); gap: 4px; }
-  .strip-day { padding: 6px 3px; }
   .today-hero { padding: 20px 18px; }
   .today-heading { font-size: 24px; }
+  .stat-tile { padding: 10px 14px; }
+  .stat-tile-value { font-size: 22px; }
+  .stat-tile-label { font-size: 9px; margin-bottom: 4px; }
+  .stat-tile-sub { display: none; }
+  #today-stats { grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 14px; }
 }
 
 @media (max-width: 480px) {
@@ -869,7 +820,7 @@ label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.07em; 
 <body>
 
 <header>
-  <div class="logo">Trail<span>&</span>Table</div>
+  <div class="logo">JS<span> — </span>Training Plan</div>
   <nav>
     <a onclick="showPage('today')"    id="nav-today"    class="active">Today</a>
     <a onclick="showPage('running')"  id="nav-running">Running</a>
@@ -892,8 +843,6 @@ label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.07em; 
       <div class="today-phase" id="today-phase-label"></div>
     </div>
 
-    <div class="week-strip" id="week-strip"></div>
-
     <div class="grid-auto" id="today-stats" style="margin-bottom:20px"></div>
 
     <div id="today-sessions-wrap">
@@ -912,8 +861,6 @@ label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.07em; 
   <div class="container">
     <div class="page-title">Running Plan</div>
     <div class="page-subtitle" id="running-subtitle"></div>
-
-    <div id="phase-banners" style="margin-bottom:28px"></div>
 
     <div id="running-weeks"></div>
   </div>
@@ -1112,30 +1059,6 @@ function renderToday() {
     $('today-phase-label').textContent = 'No active training week found for today';
   }
 
-  // Week strip
-  const monday = getMonday(todayDate);
-  const dayNames = ['M','T','W','T','F','S','S'];
-  let stripHtml = '';
-  for (let i = 0; i < 7; i++) {
-    const d = addDays(monday, i);
-    const iso = isoDate(d);
-    const isToday = iso === today;
-    const sessions = weekData ? (weekData.week.sessions || []).filter(s => {
-      const DOW = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
-      return s.day.toLowerCase() === DOW[d.getDay()];
-    }) : [];
-    const hasRun = sessions.some(s => ['run','long','quality'].includes(s.type));
-    const hasStr = sessions.some(s => s.type === 'strength');
-    const dotClass = hasRun ? 'run-dot' : hasStr ? 'strength-dot' : 'rest-dot';
-
-    stripHtml += `<div class="strip-day ${isToday ? 'today-day' : ''} ${sessions.length ? 'has-session' : ''}">
-      <div class="strip-day-name">${dayNames[i]}</div>
-      <div class="strip-day-num">${d.getDate()}</div>
-      <div class="strip-day-dot ${dotClass}"></div>
-    </div>`;
-  }
-  $('week-strip').innerHTML = stripHtml;
-
   // Stats row
   const daysToRace = daysBetween(today, CONFIG.raceDate);
   const totalWeeks = TRAINING_WEEKS.length;
@@ -1192,32 +1115,40 @@ function renderToday() {
     }).join('');
   }
 
-  // Week detail summary
+  // Week detail summary — show all 7 days including rest
   if (weekData) {
     const w = weekData.week;
     const sessions = w.sessions || [];
     const days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
     let weekHtml = `<div class="page-subtitle" style="margin-top:24px">This Week</div>
-    <div class="card"><div class="card-label">Week ${w.week} — ${w.volume}km</div>`;
+    <div class="card"><div class="card-label">Week ${w.week} — ${w.volume}km planned</div>`;
     days.forEach(day => {
       const daySessions = sessions.filter(s => s.day.toLowerCase() === day.toLowerCase());
-      if (daySessions.length === 0) return;
       weekHtml += `<div class="session-day">${day}</div>`;
-      daySessions.forEach((s, i) => {
-        const key = `week_${w.week}_${day}_${i}`;
-        const checked = isChecked(key);
-        const detailHtml = Array.isArray(s.detail)
-          ? `<ul>${s.detail.map(d => `<li>${d}</li>`).join('')}</ul>`
-          : (s.detail || '');
+      if (daySessions.length === 0) {
         weekHtml += `<div class="session-row">
-          <div class="session-check ${checked ? 'checked' : ''}" onclick="handleCheck('week_${w.week}_${day}_${i}', this)">${checked ? '✓' : ''}</div>
+          <div class="session-check" style="visibility:hidden"></div>
           <div class="session-content">
-            <div class="session-title">${runTypePill(s.type)} ${s.title}${s.distance ? ` <span style="color:var(--text3);font-weight:400">${s.distance}</span>` : ''}</div>
-            <div class="session-detail">${detailHtml}</div>
-            ${s.purpose ? `<div class="session-purpose">${s.purpose}</div>` : ''}
+            <div class="session-title" style="color:var(--text3);font-weight:400;font-size:13px">Rest</div>
           </div>
         </div>`;
-      });
+      } else {
+        daySessions.forEach((s, i) => {
+          const key = `week_${w.week}_${day}_${i}`;
+          const checked = isChecked(key);
+          const detailHtml = Array.isArray(s.detail)
+            ? `<ul>${s.detail.map(d => `<li>${d}</li>`).join('')}</ul>`
+            : (s.detail || '');
+          weekHtml += `<div class="session-row">
+            <div class="session-check ${checked ? 'checked' : ''}" onclick="handleCheck('week_${w.week}_${day}_${i}', this)">${checked ? '✓' : ''}</div>
+            <div class="session-content">
+              <div class="session-title">${runTypePill(s.type)} ${s.title}${s.distance ? ` <span style="color:var(--text3);font-weight:400">${s.distance}</span>` : ''}</div>
+              <div class="session-detail">${detailHtml}</div>
+              ${s.purpose ? `<div class="session-purpose">${s.purpose}</div>` : ''}
+            </div>
+          </div>`;
+        });
+      }
     });
     weekHtml += `</div>`;
     $('today-week-detail').innerHTML = weekHtml;
@@ -1239,28 +1170,28 @@ function handleCheck(key, el) {
 
 // ── RUNNING PAGE ──────────────────────────
 function renderRunning() {
-  // Phase banners
-  let bannersHtml = '';
-  PHASES.forEach(p => {
-    bannersHtml += `<div class="phase-banner phase-${p.id}">
-      <div class="phase-banner-title">${p.name} <span style="font-family:var(--font-mono);font-size:11px;font-weight:400;color:var(--text3)">Weeks ${p.weeks}</span></div>
-      <div class="phase-banner-desc">${p.goal}</div>
-    </div>`;
-  });
-  $('phase-banners').innerHTML = bannersHtml;
-
   const currentWeek = getCurrentWeekData();
   const currentWeekNum = currentWeek ? currentWeek.week.week : null;
 
   $('running-subtitle').textContent = `18-week plan · ${CONFIG.raceName} · ${new Date(CONFIG.raceDate).toLocaleDateString('en-GB', {day:'numeric', month:'long', year:'numeric'})}`;
 
   let weeksHtml = '';
+  let lastPhase = null;
+
   TRAINING_WEEKS.forEach((w, idx) => {
     const isCurrent = currentWeekNum === w.week;
     const phase = PHASES.find(p => p.id === w.phase);
-    const phaseColor = { recovery:'var(--text3)', base:'var(--sage)', build:'var(--amber)', peak:'var(--accent)', taper:'var(--slate)' }[w.phase] || 'var(--text3)';
 
-    // Progress bar — sessions completed this week
+    // Inject phase banner when phase changes
+    if (w.phase !== lastPhase && phase) {
+      weeksHtml += `<div class="phase-banner phase-${w.phase}" style="margin-bottom:12px;margin-top:${lastPhase ? '24px' : '0'}">
+        <div class="phase-banner-title">${phase.name} <span style="font-family:var(--font-mono);font-size:11px;font-weight:400;color:var(--text3)">Weeks ${phase.weeks}</span></div>
+        <div class="phase-banner-desc">${phase.goal}</div>
+      </div>`;
+      lastPhase = w.phase;
+    }
+
+    // Progress bar for current week
     const sessions = w.sessions || [];
     const totalCheckable = sessions.length;
     let completedCount = 0;
@@ -1274,15 +1205,20 @@ function renderRunning() {
     }
     const progressPct = totalCheckable > 0 && isCurrent ? Math.round((completedCount / totalCheckable) * 100) : 0;
 
+    // Special week tags
+    const isPeak = w.week === 15;
+    const isRaceWeek = w.week === 18;
+
     weeksHtml += `<div class="accordion-item ${isCurrent ? 'current-week' : ''}" id="week-acc-${w.week}">
       <div class="accordion-header" onclick="toggleAccordion('week-acc-${w.week}')">
         <div class="week-header">
           <div class="week-number">Week ${w.week}<span>${w.phase}</span></div>
           <div class="week-meta">
             ${isCurrent ? '<span class="current-week-tag">Current</span>' : ''}
-            ${w.cutback ? '<span class="pill pill-slate">Cutback</span>' : ''}
             <span class="week-volume">${w.volume}km</span>
-            ${runTypePill(w.phase === 'race' ? 'race' : 'easy')}
+            ${w.cutback ? '<span class="pill pill-slate">Cutback</span>' : ''}
+            ${isPeak ? '<span class="pill pill-accent">Peak Week</span>' : ''}
+            ${isRaceWeek ? '<span class="pill pill-accent">Race Week</span>' : ''}
           </div>
         </div>
         <div class="accordion-toggle">▾</div>
@@ -1319,7 +1255,7 @@ function renderRunning() {
           weeksHtml += `<div class="session-row">
             <div class="session-check ${checked ? 'checked' : ''}" onclick="handleCheck('week_${w.week}_${day}_${i}', this)">${checked ? '✓' : ''}</div>
             <div class="session-content">
-              <div class="session-title">${runTypePill(s.type)} ${s.title}${s.distance ? ` <span style="color:var(--text3);font-weight:400">${s.distance}</span>` : ''}</div>
+              <div class="session-title">${s.type !== 'run' ? runTypePill(s.type) + ' ' : ''}${s.title}${s.distance ? ` <span style="color:var(--text3);font-weight:400">${s.distance}</span>` : ''}</div>
               <div class="session-detail">${detailHtml}</div>
               ${s.purpose ? `<div class="session-purpose">${s.purpose}</div>` : ''}
             </div>
@@ -1327,7 +1263,6 @@ function renderRunning() {
         });
       });
     } else if (w.template) {
-      // Template weeks (Phase 3+)
       weeksHtml += `<div class="template-label">Template — fill in detail as you approach this week</div>`;
       w.template.forEach(t => {
         weeksHtml += `<div class="template-session"><strong>${t.day}:</strong> ${t.session}${t.distance ? ` — ${t.distance}` : ''}</div>`;
