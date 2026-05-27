@@ -167,7 +167,7 @@ const TRAINING_WEEKS = [
   // ── PHASE 2: BASE BUILDING ─────────────────────────────────────
 
   {
-    week: 4, phase: "base", volume: 32,
+    week: 4, phase: "base", volume: 33,
     startDate: "2026-06-08",
     note: "Fourth run introduced. Two S&C sessions now standard: Monday lower body (Session B), Tuesday core & upper (Session A). Long run steps up — practice eating and drinking during it.",
     sessions: [
@@ -182,12 +182,12 @@ const TRAINING_WEEKS = [
         purpose: "Core stability and movement quality.",
       },
       {
-        day: "Wednesday", type: "run", title: "Easy run", distance: "6km",
+        day: "Wednesday", type: "run", title: "Easy run", distance: "8km",
         detail: "Easy Zone 2. Fourth run — keep it genuinely easy. This run exists for volume, not intensity.",
         purpose: "Volume accumulation. Aerobic base.",
       },
       {
-        day: "Thursday", type: "run", title: "Easy run", distance: "6km",
+        day: "Thursday", type: "run", title: "Easy run", distance: "5km",
         detail: "Easy Zone 2. Rolling terrain welcome but not forced.",
         purpose: "Aerobic base.",
       },
