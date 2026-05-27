@@ -85,7 +85,7 @@ const PHASES = [
      week:      1,                  // week number (1–18)
      phase:     "recovery",         // matches PHASES id
      volume:    13,                 // planned km
-     startDate: "2026-05-12",       // Monday of that week (YYYY-MM-DD)
+     startDate: "2026-05-18",       // Monday of that week (YYYY-MM-DD)
      cutback:   false,              // true for cutback weeks
      note:      "...",              // optional note shown in accordion
      sessions:  [ ... ],           // detailed weeks (Phases 1 & 2)
@@ -108,14 +108,14 @@ const TRAINING_WEEKS = [
 
   {
     week: 1, phase: "recovery", volume: 13,
-    startDate: "2026-05-11",
+    startDate: "2026-05-18",
     note: "Week 1 complete. Two easy runs post-UTA50 while in Australia. Recovery priority.",
     sessions: [],  // complete — no sessions to tick
   },
 
   {
     week: 2, phase: "recovery", volume: 22,
-    startDate: "2026-05-18",
+    startDate: "2026-05-25",
     note: "Final week back from Australia. Three easy runs. All Zone 2 — conversational pace throughout. No watch pressure.",
     sessions: [
       {
@@ -138,7 +138,7 @@ const TRAINING_WEEKS = [
 
   {
     week: 3, phase: "recovery", volume: 30,
-    startDate: "2026-05-25",
+    startDate: "2026-06-01",
     note: "Final recovery week. Volume ticks up but all three runs remain easy. First S&C session introduced — very light, focus entirely on form.",
     sessions: [
       {
@@ -168,7 +168,7 @@ const TRAINING_WEEKS = [
 
   {
     week: 4, phase: "base", volume: 32,
-    startDate: "2026-06-01",
+    startDate: "2026-06-08",
     note: "Fourth run introduced. Two S&C sessions now standard: Monday lower body (Session B), Tuesday core & upper (Session A). Long run steps up — practice eating and drinking during it.",
     sessions: [
       {
@@ -201,7 +201,7 @@ const TRAINING_WEEKS = [
 
   {
     week: 5, phase: "base", volume: 36,
-    startDate: "2026-06-08",
+    startDate: "2026-06-15",
     sessions: [
       {
         day: "Monday", type: "run", title: "Easy run + S&C Session B", distance: "8km",
@@ -233,7 +233,7 @@ const TRAINING_WEEKS = [
 
   {
     week: 6, phase: "base", volume: 40,
-    startDate: "2026-06-15",
+    startDate: "2026-06-22",
     note: "Quality session introduced this week — hill reps. This is not a sprint session. Aerobic effort on the way up, walk recovery on the way down. Wednesday becomes the quality day from here.",
     sessions: [
       {
@@ -273,7 +273,7 @@ const TRAINING_WEEKS = [
 
   {
     week: 7, phase: "base", volume: 32,
-    startDate: "2026-06-22",
+    startDate: "2026-06-29",
     cutback: true,
     note: "Cutback week. Step back and absorb the training from weeks 4–6. All runs easy. No quality session this week — S&C maintained. You should finish this week feeling fresh.",
     sessions: [
@@ -302,7 +302,7 @@ const TRAINING_WEEKS = [
 
   {
     week: 8, phase: "base", volume: 44,
-    startDate: "2026-06-29",
+    startDate: "2026-07-06",
     note: "Back into building after cutback. Hill reps resume with higher rep count. S&C introduces Session C (core & upper) replacing Session A from here.",
     sessions: [
       {
@@ -340,7 +340,7 @@ const TRAINING_WEEKS = [
 
   {
     week: 9, phase: "base", volume: 48,
-    startDate: "2026-07-06",
+    startDate: "2026-07-13",
     sessions: [
       {
         day: "Monday", type: "run", title: "Easy run + S&C Session B", distance: "10km",
@@ -378,7 +378,7 @@ const TRAINING_WEEKS = [
 
   {
     week: 10, phase: "base", volume: 52,
-    startDate: "2026-07-13",
+    startDate: "2026-07-20",
     note: "Final base building week. Long run hits 24km. Hill reps add a mix of shorter fast reps and longer aerobic efforts.",
     sessions: [
       {
@@ -420,7 +420,7 @@ const TRAINING_WEEKS = [
 
   {
     week: 11, phase: "build", volume: 56,
-    startDate: "2026-07-20",
+    startDate: "2026-07-27",
     note: "Back-to-back long runs introduced. Sunday becomes a medium easy run after Saturday's long run. S&C remains 2x/week.",
     template: [
       { day: "Monday",    session: "Easy run + S&C Session B",         distance: "9km" },
@@ -434,7 +434,7 @@ const TRAINING_WEEKS = [
 
   {
     week: 12, phase: "build", volume: 59,
-    startDate: "2026-07-27",
+    startDate: "2026-08-03",
     note: "First flat tempo session introduced. Alternating with hill efforts from here.",
     template: [
       { day: "Monday",    session: "Easy run + S&C Session B",         distance: "9km" },
@@ -448,7 +448,7 @@ const TRAINING_WEEKS = [
 
   {
     week: 13, phase: "build", volume: 52,
-    startDate: "2026-08-03",
+    startDate: "2026-08-10",
     cutback: true,
     note: "Cutback week. Last week of two S&C sessions. Light hill reps only — no deep fatigue.",
     template: [
@@ -463,7 +463,7 @@ const TRAINING_WEEKS = [
 
   {
     week: 14, phase: "build", volume: 62,
-    startDate: "2026-08-10",
+    startDate: "2026-08-17",
     note: "S&C drops to 1x/week from here — Monday only. Trail tempo introduced.",
     template: [
       { day: "Monday",    session: "Easy run + S&C Session B (1x/week from here)", distance: "10km" },
@@ -476,7 +476,7 @@ const TRAINING_WEEKS = [
 
   {
     week: 15, phase: "build", volume: 65,
-    startDate: "2026-08-17",
+    startDate: "2026-08-24",
     note: "Peak week. 35km long run — race conditions where possible. Final S&C session. Everything you've built points here.",
     template: [
       { day: "Monday",    session: "Easy run + S&C Session B — final S&C session", distance: "8km" },
@@ -491,7 +491,7 @@ const TRAINING_WEEKS = [
 
   {
     week: 16, phase: "taper", volume: 55,
-    startDate: "2026-08-24",
+    startDate: "2026-08-31",
     note: "Taper begins. Volume drops, sharpness maintained. Last hard quality session this week. S&C stops.",
     template: [
       { day: "Monday",    session: "Easy run",                         distance: "9km" },
@@ -504,7 +504,7 @@ const TRAINING_WEEKS = [
 
   {
     week: 17, phase: "taper", volume: 45,
-    startDate: "2026-08-31",
+    startDate: "2026-09-07",
     note: "Feeling fresh. Easy runs, one light quality session. Trust the training.",
     template: [
       { day: "Monday",    session: "Easy run",                         distance: "8km" },
@@ -517,7 +517,7 @@ const TRAINING_WEEKS = [
 
   {
     week: 18, phase: "taper", volume: 20,
-    startDate: "2026-09-07",
+    startDate: "2026-09-14",
     note: "Race week. Three easy shakeout runs. Keep legs moving, nothing more. Sleep, eat, hydrate. You've done the work.",
     sessions: [
       {
