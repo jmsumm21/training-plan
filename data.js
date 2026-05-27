@@ -541,7 +541,7 @@ const TRAINING_WEEKS = [
         purpose: "Keep legs fresh and loose.",
       },
       {
-        day: "Saturday", type: "race", title: "Cotswold Way 47 — Race Day", distance: "86km",
+        day: "Saturday", type: "race", title: "Cotswold Way 47 — Race Day", distance: "76km",
         detail: "Start conservative. The first 20 miles should feel easy. Fuel every 30–40 minutes. Walk the steep climbs — save legs for the back half. Your goal is to manage the race well and finish strong.",
         purpose: "All 18 weeks have been building to this.",
       },
