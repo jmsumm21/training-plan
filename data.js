@@ -139,7 +139,7 @@ const TRAINING_WEEKS = [
   {
     week: 3, phase: "recovery", volume: 30,
     startDate: "2026-06-01",
-    note: "Final recovery week. Volume ticks up but all three runs remain easy. First S&C session introduced — very light, focus entirely on form.",
+    note: "Final recovery week. Volume ticks up but all four runs remain easy. First S&C session introduced — very light, focus entirely on form.",
     sessions: [
       {
         day: "Monday", type: "run", title: "Easy run", distance: "7km",
@@ -177,7 +177,7 @@ const TRAINING_WEEKS = [
     note: "Fourth run introduced. Two S&C sessions now standard: Monday lower body (Session B), Tuesday core & upper (Session A). Long run steps up — practice eating and drinking during it.",
     sessions: [
       {
-        day: "Monday", type: "run", title: "Easy run + S&C Session B", distance: "7km",
+        day: "Monday", type: "run", title: "Easy run + S&C Session B", distance: "6km",
         detail: "Easy effort. S&C later in the day or evening. See Strength page for Session B.",
         purpose: "Aerobic base. Lower body strength introduction.",
       },
@@ -197,7 +197,7 @@ const TRAINING_WEEKS = [
         purpose: "Aerobic base.",
       },
       {
-        day: "Saturday", type: "long", title: "Long run", distance: "13km",
+        day: "Saturday", type: "long", title: "Long run", distance: "14km",
         detail: "Easy effort throughout. Focus on time on feet, not pace. Eat and drink during the run — start practising fuelling habits now. Take a gel or snack at 45 minutes.",
         purpose: "Aerobic endurance. Fuelling practice.",
       },
@@ -209,7 +209,7 @@ const TRAINING_WEEKS = [
     startDate: "2026-06-15",
     sessions: [
       {
-        day: "Monday", type: "run", title: "Easy run + S&C Session B", distance: "8km",
+        day: "Monday", type: "run", title: "Easy run + S&C Session B", distance: "7km",
         detail: "Easy effort. S&C later in the day. See Strength page for Session B.",
         purpose: "Aerobic base. Lower body strength.",
       },
@@ -219,17 +219,17 @@ const TRAINING_WEEKS = [
         purpose: "Core stability.",
       },
       {
-        day: "Wednesday", type: "run", title: "Easy run", distance: "7km",
+        day: "Wednesday", type: "run", title: "Easy run", distance: "8km",
         detail: "Easy Zone 2. Begin to introduce gentle rolling terrain if available.",
         purpose: "Aerobic volume.",
       },
       {
-        day: "Thursday", type: "run", title: "Easy run", distance: "7km",
+        day: "Thursday", type: "run", title: "Easy run", distance: "5km",
         detail: "Easy effort. Focus on relaxed form — shoulders down, light footfall.",
         purpose: "Aerobic base.",
       },
       {
-        day: "Saturday", type: "long", title: "Long run", distance: "14km",
+        day: "Saturday", type: "long", title: "Long run", distance: "16km",
         detail: "Easy effort. Hills welcome but not forced. Practise eating every 45–60 minutes. Note what sits well in your stomach.",
         purpose: "Aerobic endurance. Fuelling habit.",
       },
@@ -242,7 +242,7 @@ const TRAINING_WEEKS = [
     note: "Quality session introduced this week — hill reps. This is not a sprint session. Aerobic effort on the way up, walk recovery on the way down. Wednesday becomes the quality day from here.",
     sessions: [
       {
-        day: "Monday", type: "run", title: "Easy run + S&C Session B", distance: "8km",
+        day: "Monday", type: "run", title: "Easy run + S&C Session B", distance: "7km",
         detail: "Easy effort. S&C later in the day. See Strength page.",
         purpose: "Aerobic base. Lower body strength.",
       },
@@ -252,7 +252,7 @@ const TRAINING_WEEKS = [
         purpose: "Core stability.",
       },
       {
-        day: "Wednesday", type: "quality", title: "Hill reps", distance: "~10km",
+        day: "Wednesday", type: "quality", title: "Hill reps", distance: "~9km",
         detail: [
           "Warm up 2km easy.",
           "Find a hill 200–400m long.",
@@ -264,12 +264,12 @@ const TRAINING_WEEKS = [
         purpose: "Introduce quality stimulus. Build hill-specific strength and trail fitness.",
       },
       {
-        day: "Thursday", type: "run", title: "Easy run", distance: "8km",
+        day: "Thursday", type: "run", title: "Easy run", distance: "6km",
         detail: "Easy Zone 2. Legs may feel heavy from hill reps — keep it genuinely easy. This run is recovery, not training.",
         purpose: "Active recovery. Aerobic base.",
       },
       {
-        day: "Saturday", type: "long", title: "Long run", distance: "16km",
+        day: "Saturday", type: "long", title: "Long run", distance: "18km",
         detail: "Easy effort. Hilly route preferred. Focus on time on feet over pace. Fuel every 45–60 minutes.",
         purpose: "Aerobic endurance. Trail specificity.",
       },
@@ -311,7 +311,7 @@ const TRAINING_WEEKS = [
     note: "Back into building after cutback. Hill reps resume with higher rep count. S&C introduces Session C (core & upper) replacing Session A from here.",
     sessions: [
       {
-        day: "Monday", type: "run", title: "Easy run + S&C Session B", distance: "9km",
+        day: "Monday", type: "run", title: "Easy run + S&C Session B", distance: "7km",
         detail: "Easy effort. S&C later in the day — lower body focus.",
         purpose: "Aerobic base. Lower body strength.",
       },
@@ -321,7 +321,7 @@ const TRAINING_WEEKS = [
         purpose: "Core strength and postural durability.",
       },
       {
-        day: "Wednesday", type: "quality", title: "Hill reps", distance: "~11km",
+        day: "Wednesday", type: "quality", title: "Hill reps", distance: "~9km",
         detail: [
           "Warm up 2km easy.",
           "8–10 reps on a 200–400m hill at strong aerobic effort.",
@@ -331,7 +331,7 @@ const TRAINING_WEEKS = [
         purpose: "Build hill strength and aerobic capacity.",
       },
       {
-        day: "Thursday", type: "run", title: "Easy run", distance: "9km",
+        day: "Thursday", type: "run", title: "Easy run", distance: "8km",
         detail: "Easy Zone 2. Recover from hill session.",
         purpose: "Active recovery.",
       },
@@ -348,7 +348,7 @@ const TRAINING_WEEKS = [
     startDate: "2026-07-13",
     sessions: [
       {
-        day: "Monday", type: "run", title: "Easy run + S&C Session B", distance: "10km",
+        day: "Monday", type: "run", title: "Easy run + S&C Session B", distance: "9km",
         detail: "Easy effort. S&C later in the day.",
         purpose: "Aerobic base. Lower body strength.",
       },
@@ -358,7 +358,7 @@ const TRAINING_WEEKS = [
         purpose: "Core and upper body strength.",
       },
       {
-        day: "Wednesday", type: "quality", title: "Hill reps", distance: "~12km",
+        day: "Wednesday", type: "quality", title: "Hill reps", distance: "~10km",
         detail: [
           "Warm up 2km easy.",
           "10 reps on a 300–400m hill.",
@@ -369,7 +369,7 @@ const TRAINING_WEEKS = [
         purpose: "Hill strength and trail-specific fitness.",
       },
       {
-        day: "Thursday", type: "run", title: "Easy run", distance: "10km",
+        day: "Thursday", type: "run", title: "Easy run", distance: "7km",
         detail: "Easy Zone 2. Recover from hill session.",
         purpose: "Active recovery and volume.",
       },
@@ -387,7 +387,7 @@ const TRAINING_WEEKS = [
     note: "Final base building week. Long run hits 24km. Hill reps add a mix of shorter fast reps and longer aerobic efforts.",
     sessions: [
       {
-        day: "Monday", type: "run", title: "Easy run + S&C Session B", distance: "11km",
+        day: "Monday", type: "run", title: "Easy run + S&C Session B", distance: "9km",
         detail: "Easy effort. S&C later in the day.",
         purpose: "Aerobic base. Lower body strength.",
       },
@@ -397,7 +397,7 @@ const TRAINING_WEEKS = [
         purpose: "Core and upper body strength.",
       },
       {
-        day: "Wednesday", type: "quality", title: "Hill reps — mixed", distance: "~13km",
+        day: "Wednesday", type: "quality", title: "Hill reps — mixed", distance: "~11km",
         detail: [
           "Warm up 2km easy.",
           "10–12 reps total — mix of shorter (200m) fast reps and longer (400m) aerobic efforts.",
@@ -407,7 +407,7 @@ const TRAINING_WEEKS = [
         purpose: "Build both speed and aerobic hill strength.",
       },
       {
-        day: "Thursday", type: "run", title: "Easy run", distance: "11km",
+        day: "Thursday", type: "run", title: "Easy run", distance: "8km",
         detail: "Easy Zone 2.",
         purpose: "Active recovery and volume.",
       },
@@ -428,12 +428,12 @@ const TRAINING_WEEKS = [
     startDate: "2026-07-27",
     note: "Back-to-back long runs introduced. Sunday becomes a medium easy run after Saturday's long run. S&C remains 2x/week.",
     template: [
-      { day: "Monday",    session: "Easy run + S&C Session B",         distance: "9km" },
+      { day: "Monday",    session: "Easy run + S&C Session B",         distance: "8km" },
       { day: "Tuesday",   session: "S&C Session C",                    distance: null },
-      { day: "Wednesday", session: "Quality: Hill efforts",            distance: "~10km — 2km WU + 6×600m + 2km CD" },
-      { day: "Thursday",  session: "Easy run",                         distance: "8km" },
-      { day: "Saturday",  session: "Long run — trail, easy-moderate",  distance: "22km" },
-      { day: "Sunday",    session: "Back-to-back easy",                distance: "7km — very easy, recovery pace" },
+      { day: "Wednesday", session: "Quality: Hill efforts",            distance: "~9km — 2km WU + 6×600m + 2km CD" },
+      { day: "Thursday",  session: "Easy run",                         distance: "7km" },
+      { day: "Saturday",  session: "Long run — trail, easy-moderate",  distance: "27km" },
+      { day: "Sunday",    session: "Back-to-back easy",                distance: "5km — very easy, recovery pace" },
     ],
   },
 
@@ -442,12 +442,12 @@ const TRAINING_WEEKS = [
     startDate: "2026-08-03",
     note: "First flat tempo session introduced. Alternating with hill efforts from here.",
     template: [
-      { day: "Monday",    session: "Easy run + S&C Session B",         distance: "9km" },
+      { day: "Monday",    session: "Easy run + S&C Session B",         distance: "7km" },
       { day: "Tuesday",   session: "S&C Session C",                    distance: null },
-      { day: "Wednesday", session: "Quality: Flat tempo",              distance: "~11km — 2km WU + 25min tempo + 2km CD" },
-      { day: "Thursday",  session: "Easy run",                         distance: "9km" },
-      { day: "Saturday",  session: "Long run — trail, easy-moderate",  distance: "22km" },
-      { day: "Sunday",    session: "Back-to-back easy",                distance: "8km" },
+      { day: "Wednesday", session: "Quality: Flat tempo",              distance: "~10km — 2km WU + 25min tempo + 2km CD" },
+      { day: "Thursday",  session: "Easy run",                         distance: "6km" },
+      { day: "Saturday",  session: "Long run — trail, easy-moderate",  distance: "30km" },
+      { day: "Sunday",    session: "Back-to-back easy",                distance: "6km" },
     ],
   },
 
@@ -471,11 +471,11 @@ const TRAINING_WEEKS = [
     startDate: "2026-08-17",
     note: "S&C drops to 1x/week from here — Monday only. Trail tempo introduced.",
     template: [
-      { day: "Monday",    session: "Easy run + S&C Session B (1x/week from here)", distance: "10km" },
-      { day: "Wednesday", session: "Quality: Trail tempo",             distance: "~12km — 2km WU + 30min trail tempo + 2km CD" },
-      { day: "Thursday",  session: "Easy run",                         distance: "10km" },
-      { day: "Saturday",  session: "Long run — trail, moderate",       distance: "22km" },
-      { day: "Sunday",    session: "Back-to-back easy",                distance: "8km" },
+      { day: "Monday",    session: "Easy run + S&C Session B (1x/week from here)", distance: "8km" },
+      { day: "Wednesday", session: "Quality: Trail tempo",             distance: "~10km — 2km WU + 30min trail tempo + 2km CD" },
+      { day: "Thursday",  session: "Easy run",                         distance: "6km" },
+      { day: "Saturday",  session: "Long run — trail, moderate",       distance: "32km" },
+      { day: "Sunday",    session: "Back-to-back easy",                distance: "6km" },
     ],
   },
 
@@ -484,10 +484,10 @@ const TRAINING_WEEKS = [
     startDate: "2026-08-24",
     note: "Peak week. 35km long run — race conditions where possible. Final S&C session. Everything you've built points here.",
     template: [
-      { day: "Monday",    session: "Easy run + S&C Session B — final S&C session", distance: "8km" },
-      { day: "Wednesday", session: "Quality: Race pace effort",        distance: "~10km — 2km WU + 25min at race effort + 2km CD" },
+      { day: "Monday",    session: "Easy run + S&C Session B — final S&C session", distance: "7km" },
+      { day: "Wednesday", session: "Quality: Race pace effort",        distance: "~9km — 2km WU + 25min at race effort + 2km CD" },
       { day: "Thursday",  session: "Easy run",                         distance: "7km" },
-      { day: "Saturday",  session: "Peak long run — trail, hilly, race conditions", distance: "35km" },
+      { day: "Saturday",  session: "Peak long run — trail, hilly, race conditions", distance: "37km" },
       { day: "Sunday",    session: "Back-to-back very easy shakeout",  distance: "5km" },
     ],
   },
@@ -499,11 +499,11 @@ const TRAINING_WEEKS = [
     startDate: "2026-08-31",
     note: "Taper begins. Volume drops, sharpness maintained. Last hard quality session this week. S&C stops.",
     template: [
-      { day: "Monday",    session: "Easy run",                         distance: "9km" },
-      { day: "Wednesday", session: "Quality: Flat tempo — last hard session", distance: "~10km — 2km WU + 20min tempo + 2km CD" },
+      { day: "Monday",    session: "Easy run",                         distance: "8km" },
+      { day: "Wednesday", session: "Quality: Flat tempo — last hard session", distance: "~9km — 2km WU + 20min tempo + 2km CD" },
       { day: "Thursday",  session: "Easy run",                         distance: "8km" },
-      { day: "Saturday",  session: "Long run — easy-moderate, confidence building", distance: "22km" },
-      { day: "Sunday",    session: "Easy run",                         distance: "6km" },
+      { day: "Saturday",  session: "Long run — easy-moderate, confidence building", distance: "25km" },
+      { day: "Sunday",    session: "Easy run",                         distance: "5km" },
     ],
   },
 
@@ -526,12 +526,12 @@ const TRAINING_WEEKS = [
     note: "Race week. Three easy shakeout runs. Keep legs moving, nothing more. Sleep, eat, hydrate. You've done the work.",
     sessions: [
       {
-        day: "Monday", type: "run", title: "Easy shakeout", distance: "5km",
+        day: "Monday", type: "run", title: "Easy shakeout", distance: "6km",
         detail: "Very easy. Just keep the legs moving. No watch pressure.",
         purpose: "Maintain feel without creating fatigue.",
       },
       {
-        day: "Wednesday", type: "run", title: "Easy shakeout with strides", distance: "5km",
+        day: "Wednesday", type: "run", title: "Easy shakeout with strides", distance: "9km",
         detail: "Easy run with 4×20 second strides at the end. Strides are brisk but not sprinting — just wake the legs up.",
         purpose: "Sharpen legs before race.",
       },
@@ -541,7 +541,7 @@ const TRAINING_WEEKS = [
         purpose: "Keep legs fresh and loose.",
       },
       {
-        day: "Saturday", type: "race", title: "Cotswold Way 47 — Race Day", distance: "47 miles",
+        day: "Saturday", type: "race", title: "Cotswold Way 47 — Race Day", distance: "86km",
         detail: "Start conservative. The first 20 miles should feel easy. Fuel every 30–40 minutes. Walk the steep climbs — save legs for the back half. Your goal is to manage the race well and finish strong.",
         purpose: "All 18 weeks have been building to this.",
       },
