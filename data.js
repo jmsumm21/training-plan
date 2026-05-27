@@ -114,7 +114,7 @@ const TRAINING_WEEKS = [
   },
 
   {
-    week: 2, phase: "recovery", volume: 22,
+    week: 2, phase: "recovery", volume: 23,
     startDate: "2026-05-25",
     note: "Final week back from Australia. Three easy runs. All Zone 2 — conversational pace throughout. No watch pressure.",
     sessions: [
@@ -124,12 +124,12 @@ const TRAINING_WEEKS = [
         purpose: "Re-establish routine post-travel.",
       },
       {
-        day: "Thursday", type: "run", title: "Easy run", distance: "6km",
+        day: "Thursday", type: "run", title: "Easy run", distance: "5km",
         detail: "Flat or gentle route. Focus on feel, not pace. Keep it comfortable.",
         purpose: "Maintain easy aerobic stimulus.",
       },
       {
-        day: "Saturday", type: "long", title: "Easy long run", distance: "8km",
+        day: "Saturday", type: "long", title: "Easy long run", distance: "10km",
         detail: "Longest run of the week but still fully easy. Treat as an extended easy effort. No pushing.",
         purpose: "Time on feet. Aerobic base without fatigue.",
       },
@@ -142,8 +142,13 @@ const TRAINING_WEEKS = [
     note: "Final recovery week. Volume ticks up but all three runs remain easy. First S&C session introduced — very light, focus entirely on form.",
     sessions: [
       {
-        day: "Monday", type: "run", title: "Easy run", distance: "8km",
+        day: "Monday", type: "run", title: "Easy run", distance: "7km",
         detail: "Easy Zone 2. Settle into a comfortable rhythm. No ego.",
+        purpose: "Aerobic base building.",
+      },
+      {
+        day: "Tuesday", type: "run", title: "Easy run", distance: "5km",
+        detail: "Nice and easy.",
         purpose: "Aerobic base building.",
       },
       {
@@ -152,12 +157,12 @@ const TRAINING_WEEKS = [
         purpose: "Introduce movement patterns. Establish routine.",
       },
       {
-        day: "Thursday", type: "run", title: "Easy run", distance: "8km",
+        day: "Thursday", type: "run", title: "Easy run", distance: "5km",
         detail: "Easy effort. Notice how legs feel after first S&C session. If heavy, slow down — that's fine.",
         purpose: "Aerobic continuity. Monitor S&C response.",
       },
       {
-        day: "Saturday", type: "long", title: "Long run", distance: "14km",
+        day: "Saturday", type: "long", title: "Long run", distance: "13km",
         detail: "First double-digit long run post-UTA50. Easy throughout — if it feels hard, you're going too fast. Trail or mixed surface preferred.",
         purpose: "Time on feet. Rebuild long run habit.",
       },
